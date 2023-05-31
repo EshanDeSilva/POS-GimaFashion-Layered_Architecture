@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.EmployerDto;
 import lk.ijse.pos.model.tm.EmployerTm;
@@ -60,6 +61,8 @@ public class EmployersFormController {
     public JFXTextField txtBankAcc;
     public JFXTextField txtBankBranch;
     public JFXTextField txtContact;
+
+    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
     public void initialize(){
 
@@ -160,7 +163,7 @@ public class EmployersFormController {
         if (btnSave.getText().equals("Save") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtContact.getText().isEmpty() &&
         !txtNIC.getText().isEmpty() && !cmbTitle.getValue().toString().isEmpty() && !datePickerDob.getValue().toString().isEmpty()) {
             try {
-                Boolean isSaved = EmployerDaoImpl.save(new EmployerDto(
+                boolean isSaved = employerDao.save(new EmployerDto(
                         txtId.getText(), cmbTitle.getValue().toString(), txtName.getText(),
                         txtNIC.getText(), datePickerDob.getValue().toString(), txtAddress.getText(),
                         txtBankAcc.getText(), txtBankBranch.getText(), txtContact.getText()
@@ -180,7 +183,7 @@ public class EmployersFormController {
         }else if (btnSave.getText().equals("Update") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtContact.getText().isEmpty() &&
                 !txtNIC.getText().isEmpty() && !cmbTitle.getValue().toString().isEmpty() && !datePickerDob.getValue().toString().isEmpty()) {
             try {
-                Boolean isUpdated = EmployerDaoImpl.update(new EmployerDto(
+                boolean isUpdated = employerDao.update(new EmployerDto(
                         txtId.getText(), cmbTitle.getValue().toString(), txtName.getText(),
                         txtNIC.getText(), datePickerDob.getValue().toString(), txtAddress.getText(),
                         txtBankAcc.getText(), txtBankBranch.getText(), txtContact.getText()
@@ -225,7 +228,7 @@ public class EmployersFormController {
     private void loadTable() {
         ObservableList<EmployerTm> tmList = FXCollections.observableArrayList();
         try {
-            List<EmployerDto> employers = EmployerDaoImpl.findAll();
+            List<EmployerDto> employers = employerDao.findAll();
             for (EmployerDto dto:employers) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
@@ -235,7 +238,7 @@ public class EmployersFormController {
                     Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete "+dto.getId()+" ?", ButtonType.NO, ButtonType.YES).showAndWait();
                     if (buttonType.get()==ButtonType.YES){
                         try {
-                            Boolean isDeleted = EmployerDaoImpl.delete(dto.getId());
+                            boolean isDeleted = employerDao.delete(dto.getId());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Deleted..!").show();
                                 loadTable();
@@ -276,7 +279,7 @@ public class EmployersFormController {
 
     private void loadId() {
         try {
-            txtId.setText(EmployerDaoImpl.getId());
+            txtId.setText(employerDao.getId());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

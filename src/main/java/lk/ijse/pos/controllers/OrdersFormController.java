@@ -87,6 +87,7 @@ public class OrdersFormController {
     PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
     ObservableList<OrderTm> cartList = FXCollections.observableArrayList();
 
@@ -206,7 +207,7 @@ public class OrdersFormController {
 
     private void loadEmployers() {
         try {
-            List<EmployerDto> employers = EmployerDaoImpl.findAll();
+            List<EmployerDto> employers = employerDao.findAll();
             ObservableList<String> idList = FXCollections.observableArrayList();
             for (EmployerDto dto:employers) {
                 idList.add(dto.getId());
@@ -219,14 +220,14 @@ public class OrdersFormController {
         cmbEmployerId.setOnAction(actionEvent -> {
             if (cmbEmployerId.getValue()!=null) {
                 try {
-                    txtEmployerName.setText(EmployerDaoImpl.find(cmbEmployerId.getValue().toString()).getName());
+                    txtEmployerName.setText(employerDao.find(cmbEmployerId.getValue().toString()).getName());
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         });
         try {
-            List<EmployerDto> employers = EmployerDaoImpl.findAll();
+            List<EmployerDto> employers = employerDao.findAll();
             ObservableList<String> nameList = FXCollections.observableArrayList();
             for (EmployerDto dto : employers) {
                 nameList.add(dto.getName());
@@ -239,7 +240,7 @@ public class OrdersFormController {
                             txtEmployerName.setText(name);
                             notSet=false;
                             try {
-                                cmbEmployerId.setValue(EmployerDaoImpl.findByName(txtEmployerName.getText()).getId());
+                                cmbEmployerId.setValue(employerDao.findByName(txtEmployerName.getText()).getId());
                             } catch (SQLException | ClassNotFoundException ex) {
                                 ex.printStackTrace();
                             }

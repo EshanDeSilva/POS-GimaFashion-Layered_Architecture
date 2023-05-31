@@ -59,6 +59,7 @@ public class OrderDetailsFormController {
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
     public void initialize(){
 
@@ -116,7 +117,7 @@ public class OrderDetailsFormController {
                         dto.getCustomerName(),
                         dto.getCustomerContact(),
                         dto.getCustomerEmail(),
-                        EmployerDaoImpl.findName(dto.getEmployerId()),
+                        employerDao.findName(dto.getEmployerId()),
                         dto.getTotal()-payAmounts
                 ));
             }
