@@ -16,6 +16,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.impl.CategoryDaoImpl;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 import lk.ijse.pos.dao.custom.impl.SupplierDaoImpl;
@@ -68,6 +69,8 @@ public class ItemsFormController {
     public JFXButton btnAddStock;
     public JFXButton btnAdd;
     public JFXTextField txtAddQty;
+
+    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
 
     public void initialize(){
 
@@ -259,7 +262,7 @@ public class ItemsFormController {
 
     private void loadSuppliers() {
         try {
-            List<SupplierDto> suppliers = SupplierDaoImpl.findAll();
+            List<SupplierDto> suppliers = supplierDao.findAll();
             ObservableList<String> idList = FXCollections.observableArrayList();
             ObservableList<String> nameList = FXCollections.observableArrayList();
             for (SupplierDto dto:suppliers) {
@@ -275,7 +278,7 @@ public class ItemsFormController {
         cmbId.setOnAction(actionEvent -> {
             if (cmbId.getValue()!=null) {
                 try {
-                    cmbSupplierName.setValue(SupplierDaoImpl.find(cmbId.getValue().toString()).getName());
+                    cmbSupplierName.setValue(supplierDao.find(cmbId.getValue().toString()).getName());
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -284,7 +287,7 @@ public class ItemsFormController {
         cmbSupplierName.setOnAction(actionEvent -> {
             if (cmbSupplierName.getValue()!=null) {
                 try {
-                    cmbId.setValue(SupplierDaoImpl.findByName(cmbSupplierName.getValue().toString()).getSupplierId());
+                    cmbId.setValue(supplierDao.findByName(cmbSupplierName.getValue().toString()).getSupplierId());
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -16,6 +16,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.SupplierDto;
 import lk.ijse.pos.model.tm.SupplierTm;
@@ -54,6 +55,8 @@ public class SuppliersFormController {
     public TreeTableColumn colItemCode;
     public TreeTableColumn colDescription;
     public TreeTableColumn colQty;
+
+    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
 
     public void initialize(){
 
@@ -110,7 +113,7 @@ public class SuppliersFormController {
 
     private void setSupplies(String id) {
         try {
-            ObservableList<SuppliesTm> list = SupplierDaoImpl.getItems(id);
+            ObservableList<SuppliesTm> list = supplierDao.getItems(id);
             TreeItem<SuppliesTm> treeItem = new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren);
             suppliesTable.setRoot(treeItem);
             suppliesTable.setShowRoot(false);
@@ -121,7 +124,7 @@ public class SuppliersFormController {
 
     private void loadId() {
         try {
-            txtId.setText(SupplierDaoImpl.getId());
+            txtId.setText(supplierDao.getId());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -154,7 +157,7 @@ public class SuppliersFormController {
     public void saveButtonOnAction(ActionEvent actionEvent) {
         if (btnSave.getText().equals("Save") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtCompany.getText().isEmpty() && !txtContact.getText().isEmpty()) {
             try {
-                Boolean isSaved = SupplierDaoImpl.save(new SupplierDto(
+                boolean isSaved = supplierDao.save(new SupplierDto(
                         txtId.getText(), cmbTitle.getValue().toString(),
                         txtName.getText(), txtCompany.getText(), txtContact.getText()
                 ));
@@ -172,7 +175,7 @@ public class SuppliersFormController {
             }
         }else if (btnSave.getText().equals("Update") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtCompany.getText().isEmpty() && !txtContact.getText().isEmpty()){
             try {
-                Boolean isUpdated = SupplierDaoImpl.update(new SupplierDto(
+                boolean isUpdated = supplierDao.update(new SupplierDto(
                         txtId.getText(), cmbTitle.getValue().toString(),
                         txtName.getText(), txtCompany.getText(), txtContact.getText()
                 ));
@@ -196,7 +199,7 @@ public class SuppliersFormController {
     private void loadSupplierTable() {
         ObservableList<SupplierTm> tmList = FXCollections.observableArrayList();
         try {
-            List<SupplierDto> suppliers = SupplierDaoImpl.findAll();
+            List<SupplierDto> suppliers = supplierDao.findAll();
             for (SupplierDto dto:suppliers) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
@@ -206,7 +209,7 @@ public class SuppliersFormController {
                     Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete "+dto.getSupplierId()+" ?", ButtonType.NO, ButtonType.YES).showAndWait();
                     if (buttonType.get()==ButtonType.YES){
                         try {
-                            Boolean isDeleted = SupplierDaoImpl.delete(dto.getSupplierId());
+                            boolean isDeleted = supplierDao.delete(dto.getSupplierId());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Deleted..!").show();
                                 loadSupplierTable();
