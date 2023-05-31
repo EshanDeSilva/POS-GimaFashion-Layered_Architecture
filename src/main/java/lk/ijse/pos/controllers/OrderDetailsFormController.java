@@ -57,6 +57,7 @@ public class OrderDetailsFormController {
     public BorderPane orderDetailsPane;
 
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
 
     public void initialize(){
 
@@ -100,7 +101,7 @@ public class OrderDetailsFormController {
 
     private void loadOrders() {
         try {
-            List<OrderDto> list = OrderDaoImpl.getAll();
+            List<OrderDto> list = orderDao.findAll();
             ObservableList<OrderDetailsTm> tmList = FXCollections.observableArrayList();
             for (OrderDto dto:list) {
                 double payAmounts = 0;

@@ -1,6 +1,7 @@
 package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.dao.DaoFactory;
+import lk.ijse.pos.dao.custom.OrderDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.OrderDetailsDto;
@@ -12,10 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDaoImpl {
-    static OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-    static PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
-    public static String getId() throws SQLException, ClassNotFoundException {
+public class OrderDaoImpl implements OrderDao {
+    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
+
+    @Override
+    public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
         if (resultSet.next()){
             int num = Integer.valueOf(resultSet.getString(1).split("-")[1]);
@@ -24,7 +27,13 @@ public class OrderDaoImpl {
         return "ORD-00000001";
     }
 
-    public static Boolean save(OrderDto dto) throws SQLException {
+    @Override
+    public OrderDto find(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(OrderDto dto) throws SQLException {
         Connection connection=null;
         try{
             connection= DBConnection.getInstance().getConnection();
@@ -35,7 +44,7 @@ public class OrderDaoImpl {
             if (orderSaved) {
                 boolean paymentSaved = paymentDao.save(dto.getPaymentDto());
                 if (paymentSaved) {
-                    Boolean detailSaved = true;
+                    boolean detailSaved = true;
                     for (OrderDetailsDto dto1 : dto.getDetailDto()) {
                         if (!orderDetailsDao.save(dto1)) {
                             detailSaved = false;
@@ -59,7 +68,23 @@ public class OrderDaoImpl {
         }
     }
 
-    public static List<OrderDto> getAll() throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(OrderDto dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exists(OrderDto orderDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public List<OrderDto> findAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM orders");
         List<OrderDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -79,7 +104,8 @@ public class OrderDaoImpl {
         return list;
     }
 
-    public static double getDailySalesTotal() throws SQLException, ClassNotFoundException {
+    @Override
+    public double getDailySalesTotal() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT SUM(orders.total) FROM orders WHERE DAY(date)=DAY(CURDATE())");
         if (resultSet.next()){
             return resultSet.getDouble(1);
@@ -87,7 +113,8 @@ public class OrderDaoImpl {
         return 0;
     }
 
-    public static double getMonthlySalesTotal() throws SQLException, ClassNotFoundException {
+    @Override
+    public double getMonthlySalesTotal() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT SUM(orders.total) FROM orders WHERE MONTH(date)=MONTH(CURDATE())");
         if (resultSet.next()){
             return resultSet.getDouble(1);
@@ -95,7 +122,8 @@ public class OrderDaoImpl {
         return 0;
     }
 
-    public static double getAnnualSalesTotal() throws SQLException, ClassNotFoundException {
+    @Override
+    public double getAnnualSalesTotal() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT SUM(orders.total) FROM orders WHERE YEAR(date)=YEAR(CURDATE())");
         if (resultSet.next()){
             return resultSet.getDouble(1);

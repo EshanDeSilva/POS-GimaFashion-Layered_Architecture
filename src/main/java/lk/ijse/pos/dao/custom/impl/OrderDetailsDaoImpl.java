@@ -48,8 +48,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
     @Override
     public double getDailyGentsSaleCount() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM category INNER JOIN item ON item.categoryId=category.categoryId " +
-                "INNER JOIN orderDetails ON item.itemCode=orderDetails.itemCode INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE orders.date=CURDATE() && category.gender=?", "Gents");
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM category INNER JOIN item ON item.categoryId=category.categoryId INNER JOIN orderDetails ON item.itemCode=orderDetails.itemCode INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE orders.date=CURDATE() && category.gender=?", "Gents");
         if (resultSet.next()){
             return resultSet.getDouble(1);
         }

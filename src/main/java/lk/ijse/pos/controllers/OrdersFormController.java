@@ -85,6 +85,7 @@ public class OrdersFormController {
     public Label lblBalance;
 
     PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
+    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
 
     ObservableList<OrderTm> cartList = FXCollections.observableArrayList();
 
@@ -258,7 +259,7 @@ public class OrdersFormController {
 
     private void loadOrderId() {
         try {
-            txtOrderId.setText(OrderDaoImpl.getId());
+            txtOrderId.setText(orderDao.getId());
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -329,7 +330,7 @@ public class OrdersFormController {
                                 datePicker.getValue().toString(),
                                 txtOrderId.getText()
                         ));
-                        Boolean isSaved = OrderDaoImpl.save(new OrderDto(
+                        boolean isSaved = orderDao.save(new OrderDto(
                                 txtOrderId.getText(),
                                 datePicker.getValue().toString(),
                                 Double.parseDouble(lblDiscount.getText()),

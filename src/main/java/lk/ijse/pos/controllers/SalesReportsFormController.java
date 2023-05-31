@@ -37,6 +37,7 @@ public class SalesReportsFormController {
 
     SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
 
     public void initialize(){
         ObservableList<String> list = FXCollections.observableArrayList("Today","This Month","This Year");
@@ -75,7 +76,7 @@ public class SalesReportsFormController {
 
             lblIncome.setText(String.format("%.2f", orderDetailsDao.getAnnualIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsDao.getAnnualSalesCount()));
-            lblSales.setText(String.format("%.2f", OrderDaoImpl.getAnnualSalesTotal()));
+            lblSales.setText(String.format("%.2f", orderDao.getAnnualSalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -93,7 +94,7 @@ public class SalesReportsFormController {
             }
             lblIncome.setText(String.format("%.2f", orderDetailsDao.getMonthlyIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsDao.getMonthlySalesCount()));
-            lblSales.setText(String.format("%.2f", OrderDaoImpl.getMonthlySalesTotal()));
+            lblSales.setText(String.format("%.2f", orderDao.getMonthlySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -105,7 +106,7 @@ public class SalesReportsFormController {
         try {
             lblIncome.setText(String.format("%.2f", orderDetailsDao.getDailyIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsDao.getDailySalesCount()));
-            lblSales.setText(String.format("%.2f", OrderDaoImpl.getDailySalesTotal()));
+            lblSales.setText(String.format("%.2f", orderDao.getDailySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -131,7 +132,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", OrderDaoImpl.getDailySalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderDao.getDailySalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {
@@ -148,7 +149,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", OrderDaoImpl.getMonthlySalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderDao.getMonthlySalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {
@@ -165,7 +166,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", OrderDaoImpl.getAnnualSalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderDao.getAnnualSalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {
