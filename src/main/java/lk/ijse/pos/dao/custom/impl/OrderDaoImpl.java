@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.OrderDetailsDto;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl {
+    static PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     public static String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
         if (resultSet.next()){
@@ -30,7 +32,7 @@ public class OrderDaoImpl {
                     dto.getOrderId(), dto.getDate(), dto.getTotalDiscount(), dto.getTotal(), dto.getEmployerId(),
                     dto.getCustomerName(), dto.getCustomerEmail(), dto.getCustomerContact());
             if (orderSaved) {
-                boolean paymentSaved = PaymentDaoImpl.save(dto.getPaymentDto());
+                boolean paymentSaved = paymentDao.save(dto.getPaymentDto());
                 if (paymentSaved) {
                     Boolean detailSaved = true;
                     for (OrderDetailsDto dto1 : dto.getDetailDto()) {
@@ -70,7 +72,7 @@ public class OrderDaoImpl {
                     resultSet.getString(7),
                     resultSet.getString(8),
                     OrderDetailsDaoImpl.getAll(resultSet.getString(1)),
-                    PaymentDaoImpl.getPayments(resultSet.getString(1))
+                    paymentDao.getPayments(resultSet.getString(1))
             ));
         }
         return list;

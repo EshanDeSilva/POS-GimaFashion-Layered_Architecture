@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.email.Email;
 import lk.ijse.pos.model.*;
@@ -82,6 +83,8 @@ public class OrdersFormController {
     public Label lblTotal;
     public Label lblDiscount;
     public Label lblBalance;
+
+    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
 
     ObservableList<OrderTm> cartList = FXCollections.observableArrayList();
 
@@ -319,7 +322,7 @@ public class OrdersFormController {
                         }
                         List<PaymentDto> payments = new ArrayList<>();
                         payments.add(new PaymentDto(
-                                PaymentDaoImpl.getId(),
+                                paymentDao.getId(),
                                 Double.parseDouble(txtCash.getText()),
                                 checkBoxCash.isSelected(),
                                 Double.parseDouble(lblBalance.getText()),
