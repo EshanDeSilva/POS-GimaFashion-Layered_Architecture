@@ -73,6 +73,7 @@ public class ItemsFormController {
     SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
     SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
 
     public void initialize(){
 
@@ -211,7 +212,7 @@ public class ItemsFormController {
         ObservableList<String> typeList = FXCollections.observableArrayList();
         typeList.add("Custom");
         try {
-            List<CategoryDto> categories = CategoryDaoImpl.findAllTypes();
+            List<CategoryDto> categories = categoryDao.findAllTypes();
             for (CategoryDto dto:categories) {
                 typeList.add(dto.getType());
             }
@@ -225,7 +226,7 @@ public class ItemsFormController {
         ObservableList<String> sizeList = FXCollections.observableArrayList();
         sizeList.add("Custom");
         try {
-            List<CategoryDto> categories = CategoryDaoImpl.findAllSize(cmbType.getValue().toString());
+            List<CategoryDto> categories = categoryDao.findAllSize(cmbType.getValue().toString());
             for (CategoryDto dto:categories) {
                 sizeList.add(dto.getSize());
             }
@@ -380,7 +381,7 @@ public class ItemsFormController {
                             format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), txtQty.getText(), new ItemDto(
                             txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                             txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
-                            CategoryDaoImpl.find(cmbType.getValue().toString(), cmbSize.getValue().toString()))
+                            categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString()))
                     ));
                     if (isSaved) {
                         //loadCode();
@@ -405,7 +406,7 @@ public class ItemsFormController {
                 boolean isUpdated = itemDao.update(new ItemDto(
                         txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                         txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
-                        CategoryDaoImpl.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
+                        categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
                 ));
                 if (isUpdated) {
                     //loadCode();
@@ -435,7 +436,7 @@ public class ItemsFormController {
                                 txtCode.getText(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),txtAddQty.getText(),new ItemDto(
                                 txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                                 String.valueOf(Integer.parseInt(txtQty.getText())+Integer.parseInt(txtAddQty.getText())), txtBuyingPrice.getText(), txtSellingPrice.getText(),
-                                CategoryDaoImpl.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
+                                categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
                         )));
                 if (isUpdated) {
                     //loadCode();
@@ -490,7 +491,7 @@ public class ItemsFormController {
             type=txtType.getText();
         }
         try{
-            Boolean isSaved = CategoryDaoImpl.save(new CategoryDto(CategoryDaoImpl.getId(), txtSize.getText(), type));
+            Boolean isSaved = categoryDao.save(new CategoryDto(categoryDao.getId(), txtSize.getText(), type));
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION,"Saved..!").show();
                 loadSizes();

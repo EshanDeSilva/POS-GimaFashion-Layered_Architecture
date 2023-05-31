@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.custom.CategoryDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.model.CategoryDto;
 
@@ -8,8 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDaoImpl {
-    public static List<CategoryDto> findAll() throws SQLException, ClassNotFoundException {
+public class CategoryDaoImpl implements CategoryDao {
+    @Override
+    public List<CategoryDto> findAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category");
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -22,7 +24,8 @@ public class CategoryDaoImpl {
         return list;
     }
 
-    public static String getId() throws SQLException, ClassNotFoundException {
+    @Override
+    public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category ORDER BY categoryId DESC LIMIT 1");
         if (resultSet.next()){
             String lastId = resultSet.getString(1).split("[-]")[1];
@@ -31,12 +34,29 @@ public class CategoryDaoImpl {
         return "CAT-001";
     }
 
-    public static Boolean save(CategoryDto dto) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean save(CategoryDto dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO category VALUES (?,?,?)",
                 dto.getId(),dto.getSize(),dto.getType());
     }
 
-    public static List<CategoryDto> findAllTypes() throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(CategoryDto dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exists(CategoryDto categoryDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public List<CategoryDto> findAllTypes() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category GROUP BY 3");
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -49,7 +69,8 @@ public class CategoryDaoImpl {
         return list;
     }
 
-    public static List<CategoryDto> findAllSize(String type) throws SQLException, ClassNotFoundException {
+    @Override
+    public List<CategoryDto> findAllSize(String type) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category WHERE gender=? GROUP BY 2",type);
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -62,7 +83,8 @@ public class CategoryDaoImpl {
         return list;
     }
 
-    public static CategoryDto find(String type, String size) throws SQLException, ClassNotFoundException {
+    @Override
+    public CategoryDto find(String type, String size) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category WHERE gender=? AND size=?",type,size);
         if (resultSet.next()){
             return new CategoryDto(resultSet.getString(1),
@@ -72,7 +94,8 @@ public class CategoryDaoImpl {
         return new CategoryDto();
     }
 
-    public static CategoryDto find(String id) throws SQLException, ClassNotFoundException {
+    @Override
+    public CategoryDto find(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category WHERE categoryId=?",id);
         if (resultSet.next()){
             return new CategoryDto(resultSet.getString(1),

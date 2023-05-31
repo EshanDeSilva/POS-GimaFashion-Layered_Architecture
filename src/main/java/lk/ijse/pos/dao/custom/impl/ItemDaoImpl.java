@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.ItemDao;
 import lk.ijse.pos.model.CategoryDto;
 import lk.ijse.pos.model.ItemDto;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDaoImpl implements ItemDao {
+    CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
+
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM item ORDER BY itemCode DESC LIMIT 1");
@@ -57,7 +60,7 @@ public class ItemDaoImpl implements ItemDao {
                     String.valueOf(resultSet.getInt(4)),
                     String.valueOf(resultSet.getDouble(5)),
                     String.valueOf(resultSet.getDouble(6)),
-                    CategoryDaoImpl.find(resultSet.getString(7))
+                    categoryDao.find(resultSet.getString(7))
             ));
         }
         return list;
@@ -74,7 +77,7 @@ public class ItemDaoImpl implements ItemDao {
                     String.valueOf(resultSet.getInt(4)),
                     String.valueOf(resultSet.getDouble(5)),
                     String.valueOf(resultSet.getDouble(6)),
-                    CategoryDaoImpl.find(resultSet.getString(7))
+                    categoryDao.find(resultSet.getString(7))
                     );
         }
         return new ItemDto();
