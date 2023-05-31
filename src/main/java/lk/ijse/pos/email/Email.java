@@ -26,7 +26,7 @@ public class Email {
 
         // Sender and recipient configuration
         String senderEmail = "hasindu363@gmail.com";
-        String senderPassword = "zgzciyeboxfgbcqu";
+        String senderPassword = "YOUR APP PASSWORD";
 
         // Create a session with the SMTP server
         return session = Session.getInstance(props,
