@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.custom.SupplierInvoiceDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.SupplierInvoiceDto;
@@ -7,9 +8,11 @@ import lk.ijse.pos.model.SupplierInvoiceDto;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-public class SupplierInvoiceDaoImpl {
-    public static String getId() throws SQLException, ClassNotFoundException {
+public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
+    @Override
+    public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM supplierinvoice ORDER BY invoiceId DESC LIMIT 1");
         if (resultSet.next()){
             String lastId = resultSet.getString(1).split("[-]")[1];
@@ -18,7 +21,18 @@ public class SupplierInvoiceDaoImpl {
         return "INV-00001";
     }
 
-    public static Boolean save(SupplierInvoiceDto dto) throws SQLException {
+    @Override
+    public SupplierInvoiceDto find(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<SupplierInvoiceDto> findAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(SupplierInvoiceDto dto) throws SQLException {
         Connection connection=null;
         try{
             connection= DBConnection.getInstance().getConnection();
@@ -42,7 +56,23 @@ public class SupplierInvoiceDaoImpl {
         }
     }
 
-    public static Boolean addStock(SupplierInvoiceDto dto) throws SQLException {
+    @Override
+    public boolean update(SupplierInvoiceDto dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exists(SupplierInvoiceDto supplierInvoiceDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean addStock(SupplierInvoiceDto dto) throws SQLException {
         Connection connection=null;
         try{
             connection= DBConnection.getInstance().getConnection();
