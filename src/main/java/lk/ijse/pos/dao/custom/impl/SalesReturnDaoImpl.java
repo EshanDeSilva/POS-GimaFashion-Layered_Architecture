@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.custom.SalesReturnDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.SalesReturnDto;
@@ -7,9 +8,11 @@ import lk.ijse.pos.model.SalesReturnDto;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-public class SalesReturnDaoImpl {
-    public static String getId() throws SQLException, ClassNotFoundException {
+public class SalesReturnDaoImpl implements SalesReturnDao {
+    @Override
+    public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT returnId FROM salesReturn ORDER BY returnId DESC LIMIT 1");
         if (resultSet.next()){
             String lastId = resultSet.getString(1).split("[-]")[1];
@@ -18,7 +21,18 @@ public class SalesReturnDaoImpl {
         return "R-00000001";
     }
 
-    public static Boolean save(SalesReturnDto dto) throws SQLException {
+    @Override
+    public SalesReturnDto find(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<SalesReturnDto> findAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(SalesReturnDto dto) throws SQLException {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -51,7 +65,23 @@ public class SalesReturnDaoImpl {
         }
     }
 
-    public static double getDailyReturnTotal() throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(SalesReturnDto dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exists(SalesReturnDto salesReturnDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public double getDailyReturnTotal() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT total FROM salesReturn WHERE date = CURDATE()");
         double total = 0;
         while (resultSet.next()){

@@ -11,6 +11,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
@@ -33,6 +34,8 @@ public class SalesReportsFormController {
     public LineChart chart;
     public BorderPane salesReportPane;
     public Label lblSales;
+
+    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
 
     public void initialize(){
         ObservableList<String> list = FXCollections.observableArrayList("Today","This Month","This Year");
@@ -178,7 +181,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", SalesReturnDaoImpl.getDailyReturnTotal()) );
+            params.put( "Total", String.format("%.2f", salesReturnDao.getDailyReturnTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {

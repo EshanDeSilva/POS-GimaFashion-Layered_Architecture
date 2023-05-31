@@ -17,6 +17,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.model.SalesReturnDetailsDto;
@@ -57,6 +58,7 @@ public class SalesReturnsFormController {
     public JFXTextField txtOrderQuantity;
     public JFXButton btnUpdate;
 
+    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
     public void initialize(){
         getOrder();
         colItemCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("itemCode"));
@@ -199,7 +201,7 @@ public class SalesReturnsFormController {
 
     public void placeReturnButtonOnAction(ActionEvent event) {
         try {
-            String returnId = SalesReturnDaoImpl.getId();
+            String returnId = salesReturnDao.getId();
             List<SalesReturnDetailsDto> returnItemList = new ArrayList<>();
             for (OrderTm tm:tmList) {
                 returnItemList.add(new SalesReturnDetailsDto(
@@ -211,7 +213,7 @@ public class SalesReturnsFormController {
                         tm.getQty()*(tm.getUnitPrice()-((tm.getUnitPrice()/100)*tm.getDiscount()))
                 ));
             }
-            Boolean isSaved = SalesReturnDaoImpl.save(new SalesReturnDto(
+            boolean isSaved = salesReturnDao.save(new SalesReturnDto(
                     returnId,
                     txtOrderId.getText(),
                     LocalDate.now().toString(),
