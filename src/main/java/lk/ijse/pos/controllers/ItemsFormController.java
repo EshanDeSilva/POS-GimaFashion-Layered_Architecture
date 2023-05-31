@@ -72,6 +72,7 @@ public class ItemsFormController {
 
     SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
     SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
+    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
 
     public void initialize(){
 
@@ -298,7 +299,7 @@ public class ItemsFormController {
 
     private void loadCode() {
         try {
-            txtCode.setText(ItemDaoImpl.getCode());
+            txtCode.setText(itemDao.getId());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -318,7 +319,7 @@ public class ItemsFormController {
     private void loadTable(){
         ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
         try {
-            List<ItemDto> items = ItemDaoImpl.findAll();
+            List<ItemDto> items = itemDao.findAll();
             for (ItemDto dto:items) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
@@ -328,7 +329,7 @@ public class ItemsFormController {
                     Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete "+dto.getCode()+" ?", ButtonType.NO, ButtonType.YES).showAndWait();
                     if (buttonType.get()==ButtonType.YES){
                         try {
-                            Boolean isDeleted = ItemDaoImpl.delete(dto.getCode());
+                            boolean isDeleted = itemDao.delete(dto.getCode());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Deleted..!").show();
                                 //loadTable();
@@ -401,7 +402,7 @@ public class ItemsFormController {
                 !txtBuyingPrice.getText().isEmpty() && !txtSellingPrice.getText().isEmpty() &&
                 cmbType.getValue()!=null && cmbSize.getValue()!=null && !cmbSize.getValue().equals("Custom")) {
             try {
-                Boolean isUpdated = ItemDaoImpl.update(new ItemDto(
+                boolean isUpdated = itemDao.update(new ItemDto(
                         txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                         txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
                         CategoryDaoImpl.find(cmbType.getValue().toString(), cmbSize.getValue().toString())

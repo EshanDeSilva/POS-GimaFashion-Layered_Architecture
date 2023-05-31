@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.SupplierInvoiceDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
@@ -11,6 +12,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
+
+    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM supplierinvoice ORDER BY invoiceId DESC LIMIT 1");
@@ -37,7 +41,7 @@ public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
         try{
             connection= DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean itemSaved = ItemDaoImpl.save(dto.getDto());
+            boolean itemSaved = itemDao.save(dto.getDto());
             if(itemSaved) {
                 Boolean invoiceSaved = CrudUtil.execute("INSERT INTO supplierinvoice VALUES (?,?,?,?,?)",
                         dto.getInvoiceId(), dto.getSupplierId(), dto.getItemCode(), dto.getDate(), dto.getQty());
@@ -77,7 +81,7 @@ public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
         try{
             connection= DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean isUpdated = ItemDaoImpl.updateQty(dto.getDto());
+            boolean isUpdated = itemDao.updateQty(dto.getDto());
             if(isUpdated) {
                 Boolean invoiceSaved = CrudUtil.execute("INSERT INTO supplierinvoice VALUES (?,?,?,?,?)",
                         dto.getInvoiceId(), dto.getSupplierId(), dto.getItemCode(), dto.getDate(), dto.getQty());

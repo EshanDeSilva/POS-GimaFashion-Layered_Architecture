@@ -60,6 +60,8 @@ public class SalesReturnsFormController {
 
     SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+
     public void initialize(){
         getOrder();
         colItemCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("itemCode"));
@@ -124,13 +126,13 @@ public class SalesReturnsFormController {
                         btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
                         tmList.add(new OrderTm(
                                 list.get(i).getItemCode(),
-                                ItemDaoImpl.find(list.get(i).getItemCode()).getDescription(),
+                                itemDao.find(list.get(i).getItemCode()).getDescription(),
                                 list.get(i).getOrderQty(),
                                 list.get(i).getUnitPrice(),
                                 LocalDate.now().toString(),
                                 list.get(i).getDiscRate(),
-                                ItemDaoImpl.find(list.get(i).getItemCode()).getCategoryDto().getType(),
-                                ItemDaoImpl.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
+                                itemDao.find(list.get(i).getItemCode()).getCategoryDto().getType(),
+                                itemDao.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
                                 ((list.get(i).getUnitPrice()-((list.get(i).getUnitPrice()/100)*list.get(i).getDiscRate()))*list.get(i).getOrderQty()),
                                 btn
                         ));
@@ -224,7 +226,7 @@ public class SalesReturnsFormController {
             if (isSaved) {
                 Boolean allAdded = true;
                 for (OrderTm tm:tmList) {
-                    Boolean isAdded = ItemDaoImpl.addStock(tm.getItemCode(),tm.getQty());
+                    Boolean isAdded = itemDao.addStock(tm.getItemCode(),tm.getQty());
                     if (!isAdded){
                         allAdded = false;
                     }

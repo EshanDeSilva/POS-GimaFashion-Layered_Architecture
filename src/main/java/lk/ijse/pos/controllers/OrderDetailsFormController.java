@@ -58,6 +58,7 @@ public class OrderDetailsFormController {
 
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
 
     public void initialize(){
 
@@ -140,13 +141,13 @@ public class OrderDetailsFormController {
             for (int i = 0; i < list.size(); i++) {
                 tmList.add(new OrderTm(
                         list.get(i).getItemCode(),
-                        ItemDaoImpl.find(list.get(i).getItemCode()).getDescription(),
+                        itemDao.find(list.get(i).getItemCode()).getDescription(),
                         list.get(i).getOrderQty(),
                         list.get(i).getUnitPrice(),
                         newValue.getValue().getDate(),
                         list.get(i).getDiscRate(),
-                        ItemDaoImpl.find(list.get(i).getItemCode()).getCategoryDto().getType(),
-                        ItemDaoImpl.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
+                        itemDao.find(list.get(i).getItemCode()).getCategoryDto().getType(),
+                        itemDao.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
                         ((list.get(i).getUnitPrice()-((list.get(i).getUnitPrice()/100)*list.get(i).getDiscRate()))*list.get(i).getOrderQty()),
                         new JFXButton("Delete")
                 ));

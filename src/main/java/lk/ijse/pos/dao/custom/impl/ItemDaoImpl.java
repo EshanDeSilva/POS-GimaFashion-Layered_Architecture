@@ -1,5 +1,6 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.dao.custom.ItemDao;
 import lk.ijse.pos.model.CategoryDto;
 import lk.ijse.pos.model.ItemDto;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
@@ -9,8 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDaoImpl {
-    public static String getCode() throws SQLException, ClassNotFoundException {
+public class ItemDaoImpl implements ItemDao {
+    @Override
+    public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM item ORDER BY itemCode DESC LIMIT 1");
         if (resultSet.next()){
             String lastId = resultSet.getString(1).split("[-]")[1];
@@ -19,23 +21,32 @@ public class ItemDaoImpl {
         return "P-00001";
     }
 
-    public static Boolean save(ItemDto dto) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean save(ItemDto dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO item VALUES (?,?,?,?,?,?,?)",
                 dto.getCode(),dto.getSupplierId(),dto.getDescription(),dto.getQty(),dto.getSellingPrice(),
                 dto.getBuyingPrice(),dto.getCategoryDto().getId());
     }
 
-    public static Boolean update(ItemDto dto) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(ItemDto dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE item SET supplierId=?,description=?,qtyOnHand=?,sellingPrice=?,buyingPrice=?," +
                         "categoryId=? WHERE itemCode=?", dto.getSupplierId(), dto.getDescription(),dto.getQty(),dto.getSellingPrice(),
                 dto.getBuyingPrice(), dto.getCategoryDto().getId(),dto.getCode());
     }
 
-    public static Boolean addStock(String code, int qty) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE item SET qtyOnHand=? WHERE itemCode=?", String.valueOf(qty+Integer.parseInt(ItemDaoImpl.find(code).getQty())), code);
+    @Override
+    public boolean exists(ItemDto itemDto) throws SQLException, ClassNotFoundException {
+        return false;
     }
 
-    public static List<ItemDto> findAll() throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean addStock(String code, int qty) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE item SET qtyOnHand=? WHERE itemCode=?", String.valueOf(qty+Integer.parseInt(find(code).getQty())), code);
+    }
+
+    @Override
+    public List<ItemDto> findAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM item ORDER BY itemCode");
         List<ItemDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -52,7 +63,8 @@ public class ItemDaoImpl {
         return list;
     }
 
-    public static ItemDto find(String code) throws SQLException, ClassNotFoundException {
+    @Override
+    public ItemDto find(String code) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM item WHERE itemCode=?",code);
         if (resultSet.next()){
             return new ItemDto(
@@ -68,15 +80,18 @@ public class ItemDaoImpl {
         return new ItemDto();
     }
 
-    public static Boolean delete(String code) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean delete(String code) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM item WHERE itemCode=?",code);
     }
 
-    public static boolean updateQty(ItemDto dto) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean updateQty(ItemDto dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE item SET qtyOnHand=? WHERE itemCode=?",dto.getQty(),dto.getCode());
     }
 
-    public static List<CategoryDto> findTypesByItem(String code) throws SQLException, ClassNotFoundException {
+    @Override
+    public List<CategoryDto> findTypesByItem(String code) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT category.categoryId,category.size,category.gender,item.itemCode FROM category INNER JOIN item ON item.categoryId=category.categoryId WHERE item.itemCode=?",code);
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){

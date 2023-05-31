@@ -86,6 +86,7 @@ public class OrdersFormController {
 
     PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
 
     ObservableList<OrderTm> cartList = FXCollections.observableArrayList();
 
@@ -126,9 +127,9 @@ public class OrdersFormController {
         txtDescription.setText(newValue.getValue().getDescription());
         txtOrderQuantity.setText(String.valueOf(newValue.getValue().getQty()));
         try {
-            txtQtyOnHand.setText(String.valueOf(ItemDaoImpl.find(txtItemCode.getText()).getQty()));
+            txtQtyOnHand.setText(String.valueOf(itemDao.find(txtItemCode.getText()).getQty()));
             txtSellingPrice.setText(String.valueOf(newValue.getValue().getUnitPrice()));
-            txtProfit.setText(String.valueOf(newValue.getValue().getUnitPrice()-Double.parseDouble(ItemDaoImpl.find(txtItemCode.getText()).getBuyingPrice())));
+            txtProfit.setText(String.valueOf(newValue.getValue().getUnitPrice()-Double.parseDouble(itemDao.find(txtItemCode.getText()).getBuyingPrice())));
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -168,7 +169,7 @@ public class OrdersFormController {
 
     private void loadItem() {
         try {
-            List<ItemDto> items = ItemDaoImpl.findAll();
+            List<ItemDto> items = itemDao.findAll();
             ObservableList<String> codeList = FXCollections.observableArrayList();
             for (ItemDto dto:items) {
                 codeList.add(dto.getCode());
@@ -189,12 +190,12 @@ public class OrdersFormController {
         if (cmbItemCode.getValue()!=null) {
             try {
                 txtItemCode.setText(cmbItemCode.getValue().toString());
-                txtDescription.setText(ItemDaoImpl.find(txtItemCode.getText()).getDescription());
-                txtQtyOnHand.setText(ItemDaoImpl.find(txtItemCode.getText()).getQty());
-                txtSellingPrice.setText(String.format("%.2f",Double.parseDouble(ItemDaoImpl.find(txtItemCode.getText()).getSellingPrice())));
-                txtProfit.setText(String.format("%.2f",Double.parseDouble(ItemDaoImpl.find(txtItemCode.getText()).getSellingPrice())-Double.parseDouble(ItemDaoImpl.find(txtItemCode.getText()).getBuyingPrice())));
-                txtType.setText(ItemDaoImpl.find(txtItemCode.getText()).getCategoryDto().getType());
-                txtSize.setText(ItemDaoImpl.find(txtItemCode.getText()).getCategoryDto().getSize());
+                txtDescription.setText(itemDao.find(txtItemCode.getText()).getDescription());
+                txtQtyOnHand.setText(itemDao.find(txtItemCode.getText()).getQty());
+                txtSellingPrice.setText(String.format("%.2f",Double.parseDouble(itemDao.find(txtItemCode.getText()).getSellingPrice())));
+                txtProfit.setText(String.format("%.2f",Double.parseDouble(itemDao.find(txtItemCode.getText()).getSellingPrice())-Double.parseDouble(itemDao.find(txtItemCode.getText()).getBuyingPrice())));
+                txtType.setText(itemDao.find(txtItemCode.getText()).getCategoryDto().getType());
+                txtSize.setText(itemDao.find(txtItemCode.getText()).getCategoryDto().getSize());
             } catch (SQLException | ClassNotFoundException | NullPointerException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR,"Something went Wrong..! Please Select Valid Code.").show();
@@ -317,7 +318,7 @@ public class OrdersFormController {
                                     tm.getItemCode(),
                                     tm.getQty(),
                                     tm.getUnitPrice(),
-                                    (tm.getAmount()) - (Double.parseDouble(ItemDaoImpl.find(tm.getItemCode()).getBuyingPrice()) * tm.getQty()),
+                                    (tm.getAmount()) - (Double.parseDouble(itemDao.find(tm.getItemCode()).getBuyingPrice()) * tm.getQty()),
                                     tm.getDiscount()
                             ));
                         }
@@ -375,14 +376,14 @@ public class OrdersFormController {
     private void updateStock() {
         for (OrderTm tm:cartList) {
             try {
-                ItemDaoImpl.updateQty(new ItemDto(
+                itemDao.updateQty(new ItemDto(
                         tm.getItemCode(),
-                        ItemDaoImpl.find(tm.getItemCode()).getSupplierId(),
+                        itemDao.find(tm.getItemCode()).getSupplierId(),
                         tm.getDescription(),
-                        String.valueOf(Integer.parseInt(ItemDaoImpl.find(tm.getItemCode()).getQty())-tm.getQty()),
+                        String.valueOf(Integer.parseInt(itemDao.find(tm.getItemCode()).getQty())-tm.getQty()),
                         String.valueOf(tm.getUnitPrice()),
-                        ItemDaoImpl.find(tm.getItemCode()).getBuyingPrice(),
-                        ItemDaoImpl.find(tm.getItemCode()).getCategoryDto()
+                        itemDao.find(tm.getItemCode()).getBuyingPrice(),
+                        itemDao.find(tm.getItemCode()).getCategoryDto()
                 ));
             }catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
