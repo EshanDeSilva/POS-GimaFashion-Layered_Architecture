@@ -17,6 +17,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.model.OrderDto;
 import lk.ijse.pos.model.PaymentDto;
@@ -54,6 +55,8 @@ public class OrderDetailsFormController {
     public TreeTableColumn colArrears1;
     public JFXTextField txtSearch;
     public BorderPane orderDetailsPane;
+
+    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
 
     public void initialize(){
 
@@ -131,7 +134,7 @@ public class OrderDetailsFormController {
 
     private void loadOrderDetails(TreeItem<OrderDetailsTm> newValue) {
         try {
-            List<OrderDetailsDto> list = OrderDetailsDaoImpl.getAll(newValue.getValue().getOrderId());
+            List<OrderDetailsDto> list = orderDetailsDao.findAll(newValue.getValue().getOrderId());
             ObservableList<OrderTm> tmList = FXCollections.observableArrayList();
             for (int i = 0; i < list.size(); i++) {
                 tmList.add(new OrderTm(

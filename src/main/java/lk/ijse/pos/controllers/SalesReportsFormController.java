@@ -36,6 +36,7 @@ public class SalesReportsFormController {
     public Label lblSales;
 
     SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
 
     public void initialize(){
         ObservableList<String> list = FXCollections.observableArrayList("Today","This Month","This Year");
@@ -59,21 +60,21 @@ public class SalesReportsFormController {
         series.setName("Sales");
         //chart.setTitle("Annual Chart "+ Year.now());
         try {
-            series.getData().add(new XYChart.Data("Jan", OrderDetailsDaoImpl.getMonthlySalesCount("january")));
-            series.getData().add(new XYChart.Data("Feb", OrderDetailsDaoImpl.getMonthlySalesCount("february")));
-            series.getData().add(new XYChart.Data("Mar", OrderDetailsDaoImpl.getMonthlySalesCount("march")));
-            series.getData().add(new XYChart.Data("Apr", OrderDetailsDaoImpl.getMonthlySalesCount("april")));
-            series.getData().add(new XYChart.Data("May", OrderDetailsDaoImpl.getMonthlySalesCount("may")));
-            series.getData().add(new XYChart.Data("Jun", OrderDetailsDaoImpl.getMonthlySalesCount("june")));
-            series.getData().add(new XYChart.Data("Jul", OrderDetailsDaoImpl.getMonthlySalesCount("july")));
-            series.getData().add(new XYChart.Data("Aug", OrderDetailsDaoImpl.getMonthlySalesCount("august")));
-            series.getData().add(new XYChart.Data("Sep", OrderDetailsDaoImpl.getMonthlySalesCount("september")));
-            series.getData().add(new XYChart.Data("Oct", OrderDetailsDaoImpl.getMonthlySalesCount("october")));
-            series.getData().add(new XYChart.Data("Nov", OrderDetailsDaoImpl.getMonthlySalesCount("november")));
-            series.getData().add(new XYChart.Data("Dec", OrderDetailsDaoImpl.getMonthlySalesCount("december")));
+            series.getData().add(new XYChart.Data("Jan", orderDetailsDao.getMonthlySalesCount("january")));
+            series.getData().add(new XYChart.Data("Feb", orderDetailsDao.getMonthlySalesCount("february")));
+            series.getData().add(new XYChart.Data("Mar", orderDetailsDao.getMonthlySalesCount("march")));
+            series.getData().add(new XYChart.Data("Apr", orderDetailsDao.getMonthlySalesCount("april")));
+            series.getData().add(new XYChart.Data("May", orderDetailsDao.getMonthlySalesCount("may")));
+            series.getData().add(new XYChart.Data("Jun", orderDetailsDao.getMonthlySalesCount("june")));
+            series.getData().add(new XYChart.Data("Jul", orderDetailsDao.getMonthlySalesCount("july")));
+            series.getData().add(new XYChart.Data("Aug", orderDetailsDao.getMonthlySalesCount("august")));
+            series.getData().add(new XYChart.Data("Sep", orderDetailsDao.getMonthlySalesCount("september")));
+            series.getData().add(new XYChart.Data("Oct", orderDetailsDao.getMonthlySalesCount("october")));
+            series.getData().add(new XYChart.Data("Nov", orderDetailsDao.getMonthlySalesCount("november")));
+            series.getData().add(new XYChart.Data("Dec", orderDetailsDao.getMonthlySalesCount("december")));
 
-            lblIncome.setText(String.format("%.2f", OrderDetailsDaoImpl.getAnnualIncome()));
-            lblSalesCount.setText(String.valueOf(OrderDetailsDaoImpl.getAnnualSalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsDao.getAnnualIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsDao.getAnnualSalesCount()));
             lblSales.setText(String.format("%.2f", OrderDaoImpl.getAnnualSalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -88,10 +89,10 @@ public class SalesReportsFormController {
         //chart.setTitle("Monthly Chart "+ Month.of(YearMonth.now().getMonthValue()));
         try {
             for (int i = 1; i <= YearMonth.now().lengthOfMonth(); i++) {
-                series.getData().add(new XYChart.Data(i+"", OrderDetailsDaoImpl.getDailySalesCount(i)));
+                series.getData().add(new XYChart.Data(i+"", orderDetailsDao.getDailySalesCount(i)));
             }
-            lblIncome.setText(String.format("%.2f", OrderDetailsDaoImpl.getMonthlyIncome()));
-            lblSalesCount.setText(String.valueOf(OrderDetailsDaoImpl.getMonthlySalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsDao.getMonthlyIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsDao.getMonthlySalesCount()));
             lblSales.setText(String.format("%.2f", OrderDaoImpl.getMonthlySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -102,8 +103,8 @@ public class SalesReportsFormController {
     private void loadToday() {
         loadThisMonth();
         try {
-            lblIncome.setText(String.format("%.2f", OrderDetailsDaoImpl.getDailyIncome()));
-            lblSalesCount.setText(String.valueOf(OrderDetailsDaoImpl.getDailySalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsDao.getDailyIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsDao.getDailySalesCount()));
             lblSales.setText(String.format("%.2f", OrderDaoImpl.getDailySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();

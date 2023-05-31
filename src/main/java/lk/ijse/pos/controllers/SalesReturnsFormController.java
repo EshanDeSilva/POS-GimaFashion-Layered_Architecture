@@ -59,6 +59,7 @@ public class SalesReturnsFormController {
     public JFXButton btnUpdate;
 
     SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     public void initialize(){
         getOrder();
         colItemCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("itemCode"));
@@ -116,7 +117,7 @@ public class SalesReturnsFormController {
                 lblTotal.setText("");
                 double total=0;
                 try {
-                    list = OrderDetailsDaoImpl.getAll(txtOrderId.getText());
+                    list = orderDetailsDao.findAll(txtOrderId.getText());
                     for (int i = 0; i < list.size(); i++) {
                         JFXButton btn = new JFXButton("Delete");
                         btn.setCursor(Cursor.HAND);

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl {
+    static OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     static PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     public static String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
@@ -36,7 +37,7 @@ public class OrderDaoImpl {
                 if (paymentSaved) {
                     Boolean detailSaved = true;
                     for (OrderDetailsDto dto1 : dto.getDetailDto()) {
-                        if (!OrderDetailsDaoImpl.save(dto1)) {
+                        if (!orderDetailsDao.save(dto1)) {
                             detailSaved = false;
                         }
                     }
@@ -71,7 +72,7 @@ public class OrderDaoImpl {
                     resultSet.getString(6),
                     resultSet.getString(7),
                     resultSet.getString(8),
-                    OrderDetailsDaoImpl.getAll(resultSet.getString(1)),
+                    orderDetailsDao.findAll(resultSet.getString(1)),
                     paymentDao.getPayments(resultSet.getString(1))
             ));
         }

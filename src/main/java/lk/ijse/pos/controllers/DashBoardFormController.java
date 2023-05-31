@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class DashBoardFormController {
     public JFXButton btnSalesReport;
 
     public static Boolean isAdminLogin = false;
+
+    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
 
     public void initialize(){
         manageDateAndTime();
@@ -53,10 +56,10 @@ public class DashBoardFormController {
                 null;
         try {
             pieChartData = FXCollections.observableArrayList(
-                    new PieChart.Data("Gents", OrderDetailsDaoImpl.getDailyGentsSaleCount()),
-                    new PieChart.Data("Ladies", OrderDetailsDaoImpl.getDailyLadiesSaleCount()),
-                    new PieChart.Data("Kids", OrderDetailsDaoImpl.getDailyKidsSaleCount()),
-                    new PieChart.Data("Other", OrderDetailsDaoImpl.getDailyOtherSaleCount())
+                    new PieChart.Data("Gents", orderDetailsDao.getDailyGentsSaleCount()),
+                    new PieChart.Data("Ladies", orderDetailsDao.getDailyLadiesSaleCount()),
+                    new PieChart.Data("Kids", orderDetailsDao.getDailyKidsSaleCount()),
+                    new PieChart.Data("Other", orderDetailsDao.getDailyOtherSaleCount())
             );
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
