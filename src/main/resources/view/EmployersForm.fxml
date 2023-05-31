@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="employerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="1104.0" style="-fx-background-color: #ecf0f1; -fx-background-image: url('img/Jeddah_Home-Grown.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controllers.EmployersFormController">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="1100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="600.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <BorderPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 15; -fx-border-color: #34495e; -fx-border-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <center>
+                  <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1000.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <JFXTreeTableView fx:id="tblEmployee" style="-fx-border-color: #2c3e50;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <columns>
+                              <TreeTableColumn fx:id="colId" prefWidth="82.39998769760132" text="ID" />
+                              <TreeTableColumn fx:id="colTitle" prefWidth="49.60002136230469" text="Title" />
+                              <TreeTableColumn fx:id="colName" prefWidth="145.60000610351562" text="Name" />
+                              <TreeTableColumn fx:id="colNIC" prefWidth="111.19998168945312" text="NIC" />
+                              <TreeTableColumn fx:id="colDOB" prefWidth="100.79998779296875" text="DOB" />
+                              <TreeTableColumn fx:id="colAddress" prefWidth="124.0" text="Address" />
+                              <TreeTableColumn fx:id="colContact" prefWidth="98.4000244140625" text="Contact" />
+                              <TreeTableColumn fx:id="colBankAcc" maxWidth="117.5999755859375" prefWidth="117.5999755859375" text="Bank Account No" />
+                              <TreeTableColumn fx:id="colBankBranch" prefWidth="106.4000244140625" text="Bank Branch" />
+                              <TreeTableColumn fx:id="colOption" minWidth="0.0" prefWidth="70.40008544921875" text="Option" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <JFXButton onAction="#backButtonOnAction" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #9b59b6;" text="Back" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
+                                    <JFXTextField fx:id="txtId" maxWidth="-Infinity" prefWidth="100.0" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="105.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXComboBox fx:id="cmbTitle" prefHeight="26.0" prefWidth="82.0" promptText="Select" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="105.0" />
+                                       </GridPane.margin>
+                                    </JFXComboBox>
+                                    <JFXTextField fx:id="txtName" layoutX="125.0" layoutY="85.0" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" promptText="Name" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="190.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtNIC" layoutX="190.0" layoutY="116.0" maxWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="National Identity Number" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="105.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtAddress" layoutX="125.0" layoutY="166.0" maxWidth="-Infinity" prefHeight="26.0" prefWidth="322.0" promptText="Address" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="105.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtSearch" maxWidth="-Infinity" prefWidth="300.0" promptText="Search" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="100.0" text="Employee ID* :" textFill="#2c3e50" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="84.0" prefHeight="26.0" prefWidth="100.0" text="Name* :" textFill="#2c3e50" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="166.0" prefHeight="26.0" prefWidth="100.0" text="Address* :" textFill="#2c3e50" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label prefHeight="26.0" prefWidth="100.0" text="NIC* :" textFill="#2c3e50" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" />
+                              <GridPane GridPane.columnIndex="2">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <DatePicker fx:id="datePickerDob" promptText="YYYY-MM-DD" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" />
+                                       </GridPane.margin>
+                                    </DatePicker>
+                                    <JFXTextField fx:id="txtContact" layoutX="140.0" layoutY="163.0" maxWidth="-Infinity" prefHeight="26.0" prefWidth="160.0" promptText="Contact" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtBankAcc" maxWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="XXXXXXXXXXX" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtBankBranch" layoutX="140.0" layoutY="116.0" maxWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="Branch" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXButton fx:id="btnSave" onAction="#saveButtonOnAction" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #34495e;" text="Save" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
+                                    <JFXButton onAction="#clearButtonOnAction" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #1abc9c;" text="Clear" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <GridPane.margin>
+                                          <Insets right="80.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <Label layoutX="15.0" layoutY="68.0" prefHeight="26.0" prefWidth="100.0" text="Date of Birth* :" textFill="#2c3e50" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="68.0" prefHeight="26.0" prefWidth="121.0" text="Bank Account No* :" textFill="#2c3e50" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="116.0" prefHeight="26.0" prefWidth="121.0" text="Bank Branch* :" textFill="#2c3e50" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="163.0" prefHeight="26.0" prefWidth="121.0" text="Contact* :" textFill="#2c3e50" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXButton layoutX="360.0" layoutY="254.0" onAction="#printButtonOnAction" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #eb4d4b;" text="Print" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <GridPane.margin>
+                                          <Insets right="156.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </center>
+            </BorderPane>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

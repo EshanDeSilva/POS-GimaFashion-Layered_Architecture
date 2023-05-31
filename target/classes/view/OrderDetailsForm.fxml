@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="orderDetailsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="1104.0" style="-fx-background-color: #dfe6e9; -fx-background-image: url('img/Jeddah_Home-Grown.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controllers.OrderDetailsFormController">
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="1100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="700.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ecf0f1; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #34495e;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <center>
+                        <GridPane BorderPane.alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Separator prefWidth="200.0" GridPane.rowIndex="1" />
+                                        <JFXTreeTableView fx:id="tblOrderDetails" GridPane.rowIndex="2">
+                                            <columns>
+                                                <TreeTableColumn fx:id="colItemCode" prefWidth="90.39998376369476" text="Item Code" />
+                                                <TreeTableColumn fx:id="colDescription" prefWidth="236.80006408691406" text="Description" />
+                                                <TreeTableColumn fx:id="colQty" prefWidth="64.0" text="QTY" />
+                                                <TreeTableColumn fx:id="colUnitPrice" prefWidth="147.99993896484375" text="Unit Price" />
+                                                <TreeTableColumn fx:id="colDate" prefWidth="128.0" text="Date" />
+                                                <TreeTableColumn fx:id="colDiscount" prefWidth="77.5999755859375" text="Discount %" />
+                                                <TreeTableColumn fx:id="colType" prefWidth="87.20001220703125" text="Type" />
+                                                <TreeTableColumn fx:id="colSize" prefWidth="68.0" text="Size" />
+                                                <TreeTableColumn fx:id="colAmount" prefWidth="116.79986572265625" text="Amount" />
+                                            </columns>
+                                        </JFXTreeTableView>
+                                        <GridPane>
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <GridPane>
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <JFXTreeTableView fx:id="tblOrder" GridPane.rowIndex="2">
+                                                            <columns>
+                                                                <TreeTableColumn fx:id="colOrderId" prefWidth="144.7999929189682" text="Order ID" />
+                                                                <TreeTableColumn fx:id="colDate1" prefWidth="111.20004272460938" text="Date" />
+                                                                <TreeTableColumn fx:id="colTotal1" prefWidth="122.39996337890625" text="Total" />
+                                                                <TreeTableColumn fx:id="colCustName1" prefWidth="149.59991455078125" text="Customer Name" />
+                                                                <TreeTableColumn fx:id="colContact1" prefWidth="118.4000244140625" text="Contact" />
+                                                                <TreeTableColumn fx:id="colEmail1" prefWidth="134.4000244140625" text="Email" />
+                                                                <TreeTableColumn fx:id="colEmployer1" prefWidth="125.59991455078125" text="Employer" />
+                                                                <TreeTableColumn fx:id="colArrears1" prefWidth="104.00006103515625" text="Arrears" />
+                                                            </columns>
+                                                        </JFXTreeTableView>
+                                                        <JFXTextField fx:id="txtSearch" maxWidth="-Infinity" prefWidth="120.0" promptText="Search" GridPane.rowIndex="1">
+                                                            <GridPane.margin>
+                                                                <Insets left="80.0" />
+                                                            </GridPane.margin>
+                                                        </JFXTextField>
+                                                        <Label prefHeight="24.0" prefWidth="76.0" text="Order ID : " GridPane.rowIndex="1">
+                                                            <font>
+                                                                <Font name="System Bold" size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <JFXButton onAction="#refreshButtonOnAction" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #4cd137;" text="Refresh" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                                            <font>
+                                                                <Font name="System Bold" size="14.0" />
+                                                            </font>
+                                                            <GridPane.margin>
+                                                                <Insets right="5.0" />
+                                                            </GridPane.margin>
+                                                            <cursor>
+                                                                <Cursor fx:constant="HAND" />
+                                                            </cursor>
+                                                        </JFXButton>
+                                                        <JFXButton layoutX="534.0" layoutY="56.0" onAction="#backButtonOnAction" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #9b59b6;" text="Back" textFill="WHITE">
+                                                            <font>
+                                                                <Font name="System Bold" size="14.0" />
+                                                            </font>
+                                                            <cursor>
+                                                                <Cursor fx:constant="HAND" />
+                                                            </cursor>
+                                                        </JFXButton>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </GridPane>
+                    </center></BorderPane>
+            </children>
+        </GridPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="orderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" style="-fx-background-color: #dfe6e9; -fx-background-image: url('img/Jeddah_Home-Grown.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controllers.OrdersFormController">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="1100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="680.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <BorderPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ecf0f1; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #34495e;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <center>
+                  <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <JFXTreeTableView fx:id="tblOrders" style="-fx-border-color: #2c3e50;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <columns>
+                              <TreeTableColumn fx:id="colItemCode" prefWidth="88.00001525878906" text="Item Code" />
+                              <TreeTableColumn fx:id="colDescription" prefWidth="196.00001525878906" text="Description" />
+                              <TreeTableColumn fx:id="colQty" prefWidth="52.0" text="Qty" />
+                              <TreeTableColumn fx:id="colUnitPrice" prefWidth="135.20001220703125" text="Unit Price" />
+                              <TreeTableColumn fx:id="colDate" prefWidth="135.199951171875" text="Date" />
+                              <TreeTableColumn fx:id="colDiscount" prefWidth="71.2000732421875" text="Discount %" />
+                              <TreeTableColumn fx:id="colType" prefWidth="70.39996337890625" text="Type" />
+                              <TreeTableColumn fx:id="colSize" prefWidth="55.199951171875" text="Size" />
+                              <TreeTableColumn fx:id="colAmount" prefWidth="139.199951171875" text="Amount" />
+                              <TreeTableColumn fx:id="colOption" prefWidth="103.99993896484375" text="Option" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <JFXButton onAction="#backButtonOnAction" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #9b59b6;" text="Back" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </JFXButton>
+                                    <JFXComboBox fx:id="cmbEmployerId" prefHeight="26.0" prefWidth="105.0" promptText="Select ID" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </JFXComboBox>
+                                    <JFXTextField fx:id="txtEmployerName" layoutX="140.0" layoutY="86.0" maxWidth="-Infinity" prefWidth="250.0" promptText="Employer Name" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="250.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="124.0" text="Customer Name :" textFill="#2c3e50" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="txtCustomerName" maxWidth="-Infinity" prefWidth="250.0" promptText="Customer Name" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="124.0" text="Customer Contact :" textFill="#2c3e50" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="txtContact" maxWidth="-Infinity" prefWidth="200.0" promptText="Contact" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="124.0" text="Customer Email :" textFill="#2c3e50" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="txtCustomerEmail" maxWidth="-Infinity" prefWidth="200.0" promptText="email@gmail.com" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label layoutX="10.0" layoutY="156.0" prefHeight="26.0" prefWidth="50.0" text="Date* :" textFill="#2c3e50" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker fx:id="datePicker" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </DatePicker>
+                                    <Label layoutX="10.0" layoutY="192.0" prefHeight="26.0" prefWidth="70.0" text="Payment* :" textFill="#2c3e50" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXCheckBox fx:id="checkBoxCash" text="Cash" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets left="130.0" />
+                                       </GridPane.margin>
+                                    </JFXCheckBox>
+                                    <JFXCheckBox fx:id="checkBoxCard" text="Card" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets left="200.0" />
+                                       </GridPane.margin>
+                                    </JFXCheckBox>
+                                    <Label layoutX="10.0" layoutY="85.0" prefHeight="26.0" prefWidth="124.0" text="Employer* :" textFill="#2c3e50" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <GridPane GridPane.columnIndex="2">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="98.0" text="Item Code* :" textFill="#2c3e50" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="txtItemCode" maxWidth="-Infinity" prefWidth="100.0" promptText="P-00000" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXComboBox fx:id="cmbItemCode" prefHeight="26.0" prefWidth="102.0" promptText="Select" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="220.0" />
+                                       </GridPane.margin>
+                                    </JFXComboBox>
+                                    <Label layoutX="270.0" layoutY="215.0" prefHeight="26.0" prefWidth="16.0" text="\%" textFill="#2c3e50" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="170.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <JFXTextField fx:id="txtDescription" maxWidth="-Infinity" prefWidth="300.0" promptText="Description" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="98.0" text="Description* :" textFill="#2c3e50" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="26.0" prefWidth="98.0" text="Qty* :" textFill="#2c3e50" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="txtOrderQuantity" maxWidth="-Infinity" prefWidth="60.0" promptText="0" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="98.0" text="Qty On Hand :" textFill="#2c3e50" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="200.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <JFXTextField fx:id="txtQtyOnHand" editable="false" maxWidth="-Infinity" prefWidth="60.0" promptText="0" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="300.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="98.0" text="Selling Price :" textFill="#2c3e50" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="26.0" prefWidth="51.0" text="Profit :" textFill="#2c3e50" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="280.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <JFXTextField fx:id="txtSellingPrice" maxWidth="-Infinity" prefWidth="150.0" promptText="0.00" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtProfit" editable="false" maxWidth="-Infinity" prefWidth="150.0" promptText="0.00" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="330.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" prefWidth="87.0" text="Discount :" textFill="#2c3e50" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="10.0" layoutY="175.0" prefHeight="26.0" prefWidth="46.0" text="Size* :" textFill="#2c3e50" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="230.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="10.0" layoutY="215.0" prefHeight="26.0" prefWidth="44.0" text="Type* :" textFill="#2c3e50" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <JFXTextField fx:id="txtDiscount" layoutX="140.0" layoutY="136.0" maxWidth="-Infinity" prefWidth="60.0" promptText="0.00" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXButton onAction="#addToCartButtonOnAction" prefHeight="32.0" prefWidth="136.0" style="-fx-background-color: #f1c40f;" text="Add to Cart" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="img/icons8-add-to-cart-64.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btnUpdate" layoutX="10.0" layoutY="251.0" onAction="#updateButtonOnAction" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #34495e;" text="Update" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets right="140.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <JFXButton onAction="#clearButtonOnAction" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: #1abc9c;" text="Clear" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets right="220.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <JFXTextField fx:id="txtOrderId" maxWidth="-Infinity" prefWidth="110.0">
+                                       <GridPane.margin>
+                                          <Insets left="410.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label prefHeight="26.0" prefWidth="73.0" text="Order ID* :" textFill="#2c3e50">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="330.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <JFXTextField fx:id="txtType" editable="false" layoutX="110.0" layoutY="55.0" maxWidth="-Infinity" prefWidth="100.0" promptText="Type" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="txtSize" editable="false" layoutX="110.0" layoutY="208.0" maxWidth="-Infinity" prefWidth="100.0" promptText="Size" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="290.0" />
+                                       </GridPane.margin>
+                                    </JFXTextField>
+                                    <JFXButton layoutX="228.0" layoutY="282.0" onAction="#removeOrderButtonOnAction" prefHeight="32.0" prefWidth="115.0" style="-fx-background-color: #EA2027;" text="Remove Order" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets right="300.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#calcButtonOnAction" prefHeight="39.0" prefWidth="26.0" style="-fx-background-radius: 10;" text=" " GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="47.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/cal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                        <Label prefHeight="30.0" prefWidth="50.0" text="Total :" textFill="#2c3e50" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label layoutX="520.0" layoutY="586.0" prefHeight="30.0" prefWidth="63.0" text="Cash* :" textFill="#2c3e50" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="730.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <JFXTextField fx:id="txtCash" focusColor="#ef0505" maxWidth="-Infinity" prefWidth="150.0" promptText="0.00" unFocusColor="#252594" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="790.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label fx:id="lblTotal" prefHeight="30.0" prefWidth="135.0" text="0.00" textFill="#ef0505" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="55.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label layoutX="871.0" layoutY="586.0" prefHeight="30.0" prefWidth="80.0" text="Discount :" textFill="#2c3e50" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="248.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lblDiscount" layoutX="920.0" layoutY="586.0" prefHeight="30.0" prefWidth="135.0" text="0.00" textFill="#ef0505" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="328.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="586.0" prefHeight="30.0" prefWidth="77.0" text="Balance :" textFill="#2c3e50" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="500.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <JFXButton fx:id="btnPlaceOrder" onAction="#placeOrderButtonOnAction" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: #e74c3c;" text="Place Order" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets top="5.0" />
+                           </GridPane.margin>
+                        </JFXButton>
+                        <Label fx:id="lblBalance" layoutX="600.0" layoutY="586.0" prefHeight="30.0" prefWidth="135.0" text="0.00" textFill="#ef0505" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="570.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </center></BorderPane>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
