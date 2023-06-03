@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="POS" />
+        <module name="POS-GimaFashion-Layered_Architecture" />
       </profile>
     </annotationProcessing>
   </component>

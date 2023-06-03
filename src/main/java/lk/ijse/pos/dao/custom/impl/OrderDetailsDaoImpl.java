@@ -123,7 +123,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
     @Override
     public int getDailySalesCount(int date) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=?",date);
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=? AND MONTH(orders.date)=MONTH(CURDATE())",date);
         if (resultSet.next()){
             return resultSet.getInt(1);
         }
@@ -159,7 +159,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
     @Override
     public int getDailySalesCount() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=DAY(CURDATE())");
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.orderQty) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=DAY(CURDATE()) AND MONTH(orders.date)=MONTH(CURDATE())");
         if (resultSet.next()){
             return resultSet.getInt(1);
         }
@@ -168,7 +168,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
     @Override
     public double getDailyIncome() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.totalProfit) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=DAY(CURDATE())");
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(orderDetails.totalProfit) FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId WHERE DAY(orders.date)=DAY(CURDATE()) AND MONTH(orders.date)=MONTH(CURDATE())");
         if (resultSet.next()){
             return resultSet.getDouble(1);
         }
