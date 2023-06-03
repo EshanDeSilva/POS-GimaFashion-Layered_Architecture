@@ -1,5 +1,6 @@
 package lk.ijse.pos.bo;
 
+import lk.ijse.pos.bo.custom.impl.SupplierInvoiceBoImpl;
 import lk.ijse.pos.bo.custom.impl.UserBoImpl;
 
 public class BoFactory {
@@ -19,6 +20,7 @@ public class BoFactory {
     public <T extends SuperBo>T getBoType(BoType type){
         switch (type){
             case USER_BO: return (T) new UserBoImpl();
+            case SUPPLIER_INVOICE_BO: return (T) new SupplierInvoiceBoImpl();
             default: return null;
         }
     }

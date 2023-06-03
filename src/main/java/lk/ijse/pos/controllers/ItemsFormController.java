@@ -16,11 +16,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
+import lk.ijse.pos.bo.custom.impl.SupplierInvoiceBoImpl;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.impl.CategoryDaoImpl;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 import lk.ijse.pos.dao.custom.impl.SupplierDaoImpl;
-import lk.ijse.pos.dao.custom.impl.SupplierInvoiceDaoImpl;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.*;
 import lk.ijse.pos.model.tm.ItemTm;
@@ -71,9 +73,11 @@ public class ItemsFormController {
     public JFXTextField txtAddQty;
 
     SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
-    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
+//    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
+
+    SupplierInvoiceBoImpl supplierInvoiceBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_INVOICE_BO);
 
     public void initialize(){
 
@@ -376,7 +380,7 @@ public class ItemsFormController {
                 cmbType.getValue()!=null && cmbSize.getValue()!=null && !cmbSize.getValue().equals("Custom")) {
             //if (cmbSize.getValue()!=null && !cmbSize.getValue().toString().isEmpty() && !cmbSize.getValue().toString().equals("Custom")) {
                 try {
-                    boolean isSaved = supplierInvoiceDao.save(new SupplierInvoiceDto(supplierInvoiceDao.getId(),
+                    boolean isSaved = supplierInvoiceBo.saveSupplierInvoice(new SupplierInvoiceDto(supplierInvoiceBo.getId(),
                             cmbId.getValue().toString(), txtCode.getText(), LocalDateTime.now().
                             format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), txtQty.getText(), new ItemDto(
                             txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
@@ -431,8 +435,8 @@ public class ItemsFormController {
                 !txtBuyingPrice.getText().isEmpty() && !txtSellingPrice.getText().isEmpty() &&
                 !cmbType.getValue().toString().isEmpty() && !cmbSize.getValue().toString().isEmpty() && !btnAddStock.isDisable()) {
             try {
-                boolean isUpdated = supplierInvoiceDao.addStock(
-                        new SupplierInvoiceDto(supplierInvoiceDao.getId(),cmbId.getValue().toString(),
+                boolean isUpdated = supplierInvoiceBo.addInvoiceStock(
+                        new SupplierInvoiceDto(supplierInvoiceBo.getId(),cmbId.getValue().toString(),
                                 txtCode.getText(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),txtAddQty.getText(),new ItemDto(
                                 txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                                 String.valueOf(Integer.parseInt(txtQty.getText())+Integer.parseInt(txtAddQty.getText())), txtBuyingPrice.getText(), txtSellingPrice.getText(),
