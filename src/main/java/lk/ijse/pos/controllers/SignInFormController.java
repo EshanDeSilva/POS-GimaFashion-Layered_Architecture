@@ -3,6 +3,8 @@ package lk.ijse.pos.controllers;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.impl.UserBoImpl;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.email.Email;
 import lk.ijse.pos.model.UserDto;
@@ -44,7 +46,8 @@ public class SignInFormController {
     public JFXComboBox cmbUserType;
     public JFXTextField txtNewUserEmail;
 
-    UserDaoImpl userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
+//    UserDaoImpl userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
+    UserBoImpl userBo = BoFactory.getInstance().getBoType(BoFactory.BoType.USER_BO);
 
     public void initialize(){
         txtPswrdAdmin.setVisible(false);
@@ -238,7 +241,7 @@ public class SignInFormController {
         if (txtNewUserEmail.getText().matches("[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\\.)+(?:[c]*[o]*[m])?")) {
             if (cmbUserType.getValue()!=null&&(cmbUserType.getValue().equals("Default")||cmbUserType.getValue().equals("Admin"))) {
                 try {
-                    boolean isSaved = userDao.save(new UserDto(txtNewUserName.getText(), pswrdConfirmNewUserPassword.getText(), txtNewUserEmail.getText(), cmbUserType.getValue().toString()));
+                    boolean isSaved = userBo.saveUser(new UserDto(txtNewUserName.getText(), pswrdConfirmNewUserPassword.getText(), txtNewUserEmail.getText(), cmbUserType.getValue().toString()));
                     if (isSaved) {
                         new Alert(Alert.AlertType.INFORMATION, "New User Created Successfully..!").show();
                         clearFields();

@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.stage.Modality;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.impl.UserBoImpl;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.model.UserDto;
 import javafx.event.ActionEvent;
@@ -24,8 +26,8 @@ public class LoginFormController {
     public JFXPasswordField pswrd;
     public JFXTextField txtPassword;
 
-    UserDaoImpl userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
-
+//    UserDaoImpl userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
+    UserBoImpl userBo = BoFactory.getInstance().getBoType(BoFactory.BoType.USER_BO);
 
     public void initialize(){
         txtPassword.setVisible(false);
@@ -48,9 +50,9 @@ public class LoginFormController {
 
     public void btnLogInOnAction(ActionEvent actionEvent) {
         try {
-            if (userDao.exists(new UserDto(txtUserName.getText(), pswrd.getText(),null,null))){
+            if (userBo.existsUser(new UserDto(txtUserName.getText(), pswrd.getText(),null,null))){
                 try {
-                    if (userDao.getUserType(txtUserName.getText()).equals("Admin")) {
+                    if (userBo.getUserType(txtUserName.getText()).equals("Admin")) {
                         DashBoardFormController.setIsAdmin(true);
                     }else{
                         DashBoardFormController.setIsAdmin(false);
