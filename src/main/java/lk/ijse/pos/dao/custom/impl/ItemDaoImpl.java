@@ -1,10 +1,15 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.ItemDao;
+import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.model.CategoryDto;
 import lk.ijse.pos.model.ItemDto;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
+import lk.ijse.pos.model.SuppliesDto;
+import lk.ijse.pos.model.tm.SuppliesTm;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -102,6 +107,24 @@ public class ItemDaoImpl implements ItemDao {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3)
+            ));
+        }
+        return list;
+    }
+
+    @Override
+    public List<Item> getItemsBySupplierId(String id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM item WHERE supplierId=?", id);
+        List<Item> list = new ArrayList<>();
+        while (resultSet.next()){
+            list.add(new Item(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4),
+                    resultSet.getDouble(5),
+                    resultSet.getDouble(6),
+                    resultSet.getString(7)
             ));
         }
         return list;

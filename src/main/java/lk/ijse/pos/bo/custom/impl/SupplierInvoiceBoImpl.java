@@ -2,6 +2,8 @@ package lk.ijse.pos.bo.custom.impl;
 
 import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
 import lk.ijse.pos.dao.DaoFactory;
+import lk.ijse.pos.dao.custom.ItemDao;
+import lk.ijse.pos.dao.custom.SupplierInvoiceDao;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 import lk.ijse.pos.dao.custom.impl.SupplierInvoiceDaoImpl;
 import lk.ijse.pos.db.DBConnection;
@@ -13,8 +15,8 @@ import java.sql.SQLException;
 
 public class SupplierInvoiceBoImpl implements SupplierInvoiceBo {
 
-    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
-    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    SupplierInvoiceDao supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
+    ItemDao itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
 
     @Override
     public String getId() throws SQLException, ClassNotFoundException {

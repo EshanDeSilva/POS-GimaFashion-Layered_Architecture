@@ -2,6 +2,7 @@ package lk.ijse.pos.bo.custom.impl;
 
 import lk.ijse.pos.bo.custom.UserBo;
 import lk.ijse.pos.dao.DaoFactory;
+import lk.ijse.pos.dao.custom.UserDao;
 import lk.ijse.pos.dao.custom.impl.UserDaoImpl;
 import lk.ijse.pos.entity.User;
 import lk.ijse.pos.model.UserDto;
@@ -9,7 +10,7 @@ import lk.ijse.pos.model.UserDto;
 import java.sql.SQLException;
 
 public class UserBoImpl implements UserBo {
-    UserDaoImpl userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
+    UserDao userDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.USER);
 
     @Override
     public boolean saveUser(UserDto user) throws SQLException, ClassNotFoundException {

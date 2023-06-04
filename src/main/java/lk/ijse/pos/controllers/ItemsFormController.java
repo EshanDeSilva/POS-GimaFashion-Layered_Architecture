@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.SupplierBo;
 import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
 import lk.ijse.pos.bo.custom.impl.SupplierInvoiceBoImpl;
 import lk.ijse.pos.dao.DaoFactory;
@@ -72,12 +73,13 @@ public class ItemsFormController {
     public JFXButton btnAdd;
     public JFXTextField txtAddQty;
 
-    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
+//    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
 //    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
 
-    SupplierInvoiceBoImpl supplierInvoiceBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_INVOICE_BO);
+    SupplierInvoiceBo supplierInvoiceBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_INVOICE_BO);
+    SupplierBo supplierBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_BO);
 
     public void initialize(){
 
@@ -269,7 +271,7 @@ public class ItemsFormController {
 
     private void loadSuppliers() {
         try {
-            List<SupplierDto> suppliers = supplierDao.findAll();
+            List<SupplierDto> suppliers = supplierBo.findAllSuppliers();
             ObservableList<String> idList = FXCollections.observableArrayList();
             ObservableList<String> nameList = FXCollections.observableArrayList();
             for (SupplierDto dto:suppliers) {
@@ -285,7 +287,7 @@ public class ItemsFormController {
         cmbId.setOnAction(actionEvent -> {
             if (cmbId.getValue()!=null) {
                 try {
-                    cmbSupplierName.setValue(supplierDao.find(cmbId.getValue().toString()).getName());
+                    cmbSupplierName.setValue(supplierBo.findSupplier(cmbId.getValue().toString()).getName());
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -294,7 +296,7 @@ public class ItemsFormController {
         cmbSupplierName.setOnAction(actionEvent -> {
             if (cmbSupplierName.getValue()!=null) {
                 try {
-                    cmbId.setValue(supplierDao.findByName(cmbSupplierName.getValue().toString()).getSupplierId());
+                    cmbId.setValue(supplierBo.findSupplierByName(cmbSupplierName.getValue().toString()).getSupplierId());
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }

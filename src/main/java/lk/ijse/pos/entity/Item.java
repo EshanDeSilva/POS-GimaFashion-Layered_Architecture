@@ -11,8 +11,8 @@ public class Item {
     private String itemCode;
     private String supplierId;
     private String description;
-    private String qtyOnHand;
-    private String sellingPrice;
-    private String buyingPrice;
+    private int qtyOnHand;
+    private double sellingPrice;
+    private double buyingPrice;
     private String categoryId;
 }
