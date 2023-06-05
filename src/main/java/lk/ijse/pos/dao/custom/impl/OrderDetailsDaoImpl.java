@@ -17,18 +17,18 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     }
 
     @Override
-    public boolean save(OrderDetails dto) throws SQLException, ClassNotFoundException {
+    public boolean save(OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO orderdetails VALUES (?,?,?,?,?,?)",
-                dto.getOrderId(),dto.getItemCode(),dto.getOrderQty(),dto.getUnitPrice(),dto.getTotalProfit(),dto.getDiscountRate());
+                orderDetails.getOrderId(),orderDetails.getItemCode(),orderDetails.getOrderQty(),orderDetails.getUnitPrice(),orderDetails.getTotalProfit(),orderDetails.getDiscountRate());
     }
 
     @Override
-    public boolean update(OrderDetails dto) throws SQLException, ClassNotFoundException {
+    public boolean update(OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(OrderDetails orderDetailsDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
         return false;
     }
 

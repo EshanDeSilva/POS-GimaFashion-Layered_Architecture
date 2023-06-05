@@ -33,18 +33,18 @@ public class SalesReturnDaoImpl implements SalesReturnDao {
     }
 
     @Override
-    public boolean save(SalesReturn dto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("INSERT INTO salesReturn VALUES (?,?,?,?)",dto.getReturnId(),
-                dto.getOrderId(),dto.getDate(),dto.getTotal());
+    public boolean save(SalesReturn salesReturn) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("INSERT INTO salesReturn VALUES (?,?,?,?)",salesReturn.getReturnId(),
+                salesReturn.getOrderId(),salesReturn.getDate(),salesReturn.getTotal());
     }
 
     @Override
-    public boolean update(SalesReturn dto) throws SQLException, ClassNotFoundException {
+    public boolean update(SalesReturn salesReturn) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(SalesReturn salesReturnDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(SalesReturn salesReturn) throws SQLException, ClassNotFoundException {
         return false;
     }
 

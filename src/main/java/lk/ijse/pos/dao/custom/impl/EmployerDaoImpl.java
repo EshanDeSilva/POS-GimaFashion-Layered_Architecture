@@ -23,28 +23,28 @@ public class EmployerDaoImpl implements EmployerDao {
     }
 
     @Override
-    public boolean save(Employer dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Employer employer) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO employer VALUES (?,?,?,?,?,?,?,?,?)",
-                dto.getId(),
-                dto.getTitle(),
-                dto.getName(),
-                dto.getNic(),
-                dto.getDob(),
-                dto.getAddress(),
-                dto.getBankAccountNo(),
-                dto.getBankBranch(),
-                dto.getContactNo());
+                employer.getId(),
+                employer.getTitle(),
+                employer.getName(),
+                employer.getNic(),
+                employer.getDob(),
+                employer.getAddress(),
+                employer.getBankAccountNo(),
+                employer.getBankBranch(),
+                employer.getContactNo());
     }
 
     @Override
-    public boolean update(Employer dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Employer employer) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE employer SET title=?,name=?,nic=?,dob=?,address=?,bankAccountNo=?," +
-                        "bankBranch=?,contactNo=? WHERE id=?", dto.getTitle(),dto.getName(),dto.getNic(),dto.getDob(),
-                dto.getAddress(),dto.getBankAccountNo(),dto.getBankBranch(),dto.getContactNo(),dto.getId());
+                        "bankBranch=?,contactNo=? WHERE id=?", employer.getTitle(),employer.getName(),employer.getNic(),employer.getDob(),
+                employer.getAddress(),employer.getBankAccountNo(),employer.getBankBranch(),employer.getContactNo(),employer.getId());
     }
 
     @Override
-    public boolean exists(Employer employerDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Employer employer) throws SQLException, ClassNotFoundException {
         return false;
     }
 

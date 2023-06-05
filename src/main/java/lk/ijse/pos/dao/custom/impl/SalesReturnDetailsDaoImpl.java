@@ -14,15 +14,15 @@ public class SalesReturnDetailsDaoImpl implements SalesReturnDetailsDao {
     }
 
     @Override
-    public boolean save(SalesReturnDetails dto) throws SQLException, ClassNotFoundException {
+    public boolean save(SalesReturnDetails salesReturnDetails) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO salesReturnDetails VALUES (?,?,?,?,?,?)",
-                dto.getReturnId(),dto.getItemCode(),
-                dto.getQty(),dto.getDiscRate(),
-                dto.getUnitPrice(),dto.getAmount());
+                salesReturnDetails.getReturnId(),salesReturnDetails.getItemCode(),
+                salesReturnDetails.getQty(),salesReturnDetails.getDiscRate(),
+                salesReturnDetails.getUnitPrice(),salesReturnDetails.getAmount());
     }
 
     @Override
-    public boolean update(SalesReturnDetails dto) throws SQLException, ClassNotFoundException {
+    public boolean update(SalesReturnDetails salesReturnDetails) throws SQLException, ClassNotFoundException {
         return false;
     }
 

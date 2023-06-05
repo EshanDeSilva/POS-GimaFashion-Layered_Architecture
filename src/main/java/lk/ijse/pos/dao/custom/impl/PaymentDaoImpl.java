@@ -17,17 +17,17 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public boolean save(Payment dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Payment payment) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean update(Payment dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Payment payment) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(Payment paymentDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Payment payment) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -52,12 +52,12 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public boolean save(List<Payment> dtos) throws SQLException, ClassNotFoundException {
+    public boolean save(List<Payment> list) throws SQLException, ClassNotFoundException {
         boolean isSaved = true;
-        for (Payment dto:dtos) {
+        for (Payment payment:list) {
             if (CrudUtil.execute("INSERT INTO payment VALUES (?,?,?,?,?,?)",
-                    dto.getPaymentId(),dto.getCash(),dto.isPayByCash(),dto.getBalance(),dto.getDate(),
-                    dto.getOrderId())){
+                    payment.getPaymentId(),payment.getCash(),payment.isPayByCash(),payment.getBalance(),payment.getDate(),
+                    payment.getOrderId())){
 
             }else{
                 isSaved = false;

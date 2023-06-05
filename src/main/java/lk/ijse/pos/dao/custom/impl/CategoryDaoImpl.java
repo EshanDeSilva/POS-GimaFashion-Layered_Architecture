@@ -35,18 +35,18 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public boolean save(Category dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Category category) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO category VALUES (?,?,?)",
-                dto.getCategoryId(),dto.getSize(),dto.getGender());
+                category.getCategoryId(),category.getSize(),category.getGender());
     }
 
     @Override
-    public boolean update(Category dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Category category) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(Category categoryDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Category category) throws SQLException, ClassNotFoundException {
         return false;
     }
 

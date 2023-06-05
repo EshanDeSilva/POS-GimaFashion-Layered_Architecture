@@ -21,21 +21,21 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean save(Item dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Item item) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO item VALUES (?,?,?,?,?,?,?)",
-                dto.getItemCode(),dto.getSupplierId(),dto.getDescription(),dto.getQtyOnHand(),dto.getSellingPrice(),
-                dto.getBuyingPrice(),dto.getCategoryId());
+                item.getItemCode(),item.getSupplierId(),item.getDescription(),item.getQtyOnHand(),item.getSellingPrice(),
+                item.getBuyingPrice(),item.getCategoryId());
     }
 
     @Override
-    public boolean update(Item dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Item item) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE item SET supplierId=?,description=?,qtyOnHand=?,sellingPrice=?,buyingPrice=?," +
-                        "categoryId=? WHERE itemCode=?", dto.getSupplierId(), dto.getDescription(),dto.getQtyOnHand(),dto.getSellingPrice(),
-                dto.getBuyingPrice(), dto.getCategoryId(),dto.getCategoryId());
+                        "categoryId=? WHERE itemCode=?", item.getSupplierId(), item.getDescription(),item.getQtyOnHand(),item.getSellingPrice(),
+                item.getBuyingPrice(), item.getCategoryId(),item.getCategoryId());
     }
 
     @Override
-    public boolean exists(Item itemDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Item item) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -85,8 +85,8 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean updateQty(Item dto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE item SET qtyOnHand=? WHERE itemCode=?",dto.getQtyOnHand(),dto.getItemCode());
+    public boolean updateQty(Item item) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE item SET qtyOnHand=? WHERE itemCode=?",item.getQtyOnHand(),item.getItemCode());
     }
 
 //    @Override

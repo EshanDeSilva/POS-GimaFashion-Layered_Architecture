@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ItemDao extends CrudDao<Item,String> {
     boolean addStock(String code, int qty) throws SQLException, ClassNotFoundException;
-    boolean updateQty(Item dto) throws SQLException, ClassNotFoundException;
+    boolean updateQty(Item item) throws SQLException, ClassNotFoundException;
     List<Item> getItemsBySupplierId(String id) throws SQLException, ClassNotFoundException;
 }

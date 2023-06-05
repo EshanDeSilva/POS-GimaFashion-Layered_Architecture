@@ -16,13 +16,13 @@ import java.util.List;
 public class SupplierDaoImpl implements SupplierDao {
 
     @Override
-    public boolean save(Supplier dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Supplier supplier) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO supplier VALUES (?,?,?,?,?)",
-                dto.getSupplierId(),
-                dto.getTitle(),
-                dto.getSupplierName(),
-                dto.getCompany(),
-                dto.getContact());
+                supplier.getSupplierId(),
+                supplier.getTitle(),
+                supplier.getSupplierName(),
+                supplier.getCompany(),
+                supplier.getContact());
     }
 
     @Override
@@ -57,13 +57,13 @@ public class SupplierDaoImpl implements SupplierDao {
     }
 
     @Override
-    public boolean update(Supplier dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Supplier supplier) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE supplier SET title=?,supplierName=?,company=?,contact=? WHERE supplierId=?",
-                dto.getTitle(),dto.getSupplierName(),dto.getCompany(),dto.getContact(),dto.getSupplierId());
+                supplier.getTitle(),supplier.getSupplierName(),supplier.getCompany(),supplier.getContact(),supplier.getSupplierId());
     }
 
     @Override
-    public boolean exists(Supplier supplierDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Supplier supplier) throws SQLException, ClassNotFoundException {
         return false;
     }
 

@@ -30,18 +30,18 @@ public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
     }
 
     @Override
-    public boolean save(SupplierInvoice dto) throws SQLException, ClassNotFoundException {
+    public boolean save(SupplierInvoice supplierInvoice) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO supplierinvoice VALUES (?,?,?,?,?)",
-                dto.getInvoiceId(), dto.getSupplierId(), dto.getItemCode(), dto.getDate(), dto.getQty());
+                supplierInvoice.getInvoiceId(), supplierInvoice.getSupplierId(), supplierInvoice.getItemCode(), supplierInvoice.getDate(), supplierInvoice.getQty());
     }
 
     @Override
-    public boolean update(SupplierInvoice dto) throws SQLException, ClassNotFoundException {
+    public boolean update(SupplierInvoice supplierInvoice) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(SupplierInvoice supplierInvoiceDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(SupplierInvoice supplierInvoice) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -51,9 +51,9 @@ public class SupplierInvoiceDaoImpl implements SupplierInvoiceDao {
     }
 
     @Override
-    public boolean addStock(SupplierInvoice dto) throws SQLException, ClassNotFoundException {
+    public boolean addStock(SupplierInvoice supplierInvoice) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO supplierinvoice VALUES (?,?,?,?,?)",
-                dto.getInvoiceId(), dto.getSupplierId(), dto.getItemCode(), dto.getDate(), dto.getQty());
+                supplierInvoice.getInvoiceId(), supplierInvoice.getSupplierId(), supplierInvoice.getItemCode(), supplierInvoice.getDate(), supplierInvoice.getQty());
     }
 
 }

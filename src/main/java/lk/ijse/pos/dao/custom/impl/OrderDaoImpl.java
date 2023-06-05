@@ -1,28 +1,15 @@
 package lk.ijse.pos.dao.custom.impl;
 
-import lk.ijse.pos.bo.BoFactory;
-import lk.ijse.pos.bo.custom.OrderDetailsBo;
-import lk.ijse.pos.bo.custom.PaymentBo;
-import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.OrderDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
-import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.entity.Orders;
-import lk.ijse.pos.model.OrderDetailsDto;
-import lk.ijse.pos.model.OrderDto;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-//    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-//    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
-    PaymentBo paymentBo = BoFactory.getInstance().getBoType(BoFactory.BoType.PAYMENT_BO);
-    OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
-
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
@@ -39,19 +26,19 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public boolean save(Orders dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Orders order) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO orders VALUES (?,?,?,?,?,?,?,?)",
-                dto.getOrderId(), dto.getDate(), dto.getTotalDiscount(), dto.getTotal(), dto.getEmployerId(),
-                dto.getCustomerName(), dto.getCustomerEmail(), dto.getCustomerContact());
+                order.getOrderId(), order.getDate(), order.getTotalDiscount(), order.getTotal(), order.getEmployerId(),
+                order.getCustomerName(), order.getCustomerEmail(), order.getCustomerContact());
     }
 
     @Override
-    public boolean update(Orders dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Orders order) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(Orders orderDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Orders order) throws SQLException, ClassNotFoundException {
         return false;
     }
 
