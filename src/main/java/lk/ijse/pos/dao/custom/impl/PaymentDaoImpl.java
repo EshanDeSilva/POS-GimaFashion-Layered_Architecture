@@ -2,6 +2,7 @@ package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.dao.custom.PaymentDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
+import lk.ijse.pos.entity.Payment;
 import lk.ijse.pos.model.PaymentDto;
 
 import java.sql.ResultSet;
@@ -11,22 +12,22 @@ import java.util.List;
 
 public class PaymentDaoImpl implements PaymentDao {
     @Override
-    public List<PaymentDto> findAll() throws SQLException, ClassNotFoundException {
+    public List<Payment> findAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(PaymentDto dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Payment dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean update(PaymentDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Payment dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(PaymentDto paymentDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Payment paymentDto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -46,14 +47,14 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public PaymentDto find(String s) throws SQLException, ClassNotFoundException {
+    public Payment find(String s) throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(List<PaymentDto> dtos) throws SQLException, ClassNotFoundException {
+    public boolean save(List<Payment> dtos) throws SQLException, ClassNotFoundException {
         boolean isSaved = true;
-        for (PaymentDto dto:dtos) {
+        for (Payment dto:dtos) {
             if (CrudUtil.execute("INSERT INTO payment VALUES (?,?,?,?,?,?)",
                     dto.getPaymentId(),dto.getCash(),dto.isPayByCash(),dto.getBalance(),dto.getDate(),
                     dto.getOrderId())){
@@ -66,11 +67,11 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public List<PaymentDto> getPayments(String id) throws SQLException, ClassNotFoundException {
+    public List<Payment> getPayments(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM payment WHERE orderId=?",id);
-        List<PaymentDto> list = new ArrayList<>();
+        List<Payment> list = new ArrayList<>();
         while (resultSet.next()){
-            list.add(new PaymentDto(
+            list.add(new Payment(
                     resultSet.getString(1),
                     resultSet.getDouble(2),
                     resultSet.getBoolean(3),

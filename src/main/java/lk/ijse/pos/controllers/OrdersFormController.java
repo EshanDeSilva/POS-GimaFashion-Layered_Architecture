@@ -15,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.PaymentBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.email.Email;
@@ -84,7 +86,8 @@ public class OrdersFormController {
     public Label lblDiscount;
     public Label lblBalance;
 
-    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
+//    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
+    PaymentBo paymentBo = BoFactory.getInstance().getBoType(BoFactory.BoType.PAYMENT_BO);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
@@ -325,7 +328,7 @@ public class OrdersFormController {
                         }
                         List<PaymentDto> payments = new ArrayList<>();
                         payments.add(new PaymentDto(
-                                paymentDao.getId(),
+                                paymentBo.getId(),
                                 Double.parseDouble(txtCash.getText()),
                                 checkBoxCash.isSelected(),
                                 Double.parseDouble(lblBalance.getText()),

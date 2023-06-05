@@ -1,5 +1,7 @@
 package lk.ijse.pos.dao.custom.impl;
 
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.PaymentBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.OrderDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
@@ -15,8 +17,8 @@ import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
-
+//    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
+    PaymentBo paymentBo = BoFactory.getInstance().getBoType(BoFactory.BoType.PAYMENT_BO);
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
@@ -42,7 +44,7 @@ public class OrderDaoImpl implements OrderDao {
                     dto.getOrderId(), dto.getDate(), dto.getTotalDiscount(), dto.getTotal(), dto.getEmployerId(),
                     dto.getCustomerName(), dto.getCustomerEmail(), dto.getCustomerContact());
             if (orderSaved) {
-                boolean paymentSaved = paymentDao.save(dto.getPaymentDto());
+                boolean paymentSaved = paymentBo.savePayment(dto.getPaymentDto());
                 if (paymentSaved) {
                     boolean detailSaved = true;
                     for (OrderDetailsDto dto1 : dto.getDetailDto()) {
@@ -98,7 +100,7 @@ public class OrderDaoImpl implements OrderDao {
                     resultSet.getString(7),
                     resultSet.getString(8),
                     orderDetailsDao.findAll(resultSet.getString(1)),
-                    paymentDao.getPayments(resultSet.getString(1))
+                    paymentBo.getPayments(resultSet.getString(1))
             ));
         }
         return list;
