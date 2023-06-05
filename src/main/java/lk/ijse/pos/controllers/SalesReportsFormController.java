@@ -11,11 +11,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.SalesReturnBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
-import lk.ijse.pos.dao.custom.impl.SalesReturnDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -35,7 +36,8 @@ public class SalesReportsFormController {
     public BorderPane salesReportPane;
     public Label lblSales;
 
-    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+//    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+    SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
 
@@ -183,7 +185,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", salesReturnDao.getDailyReturnTotal()) );
+            params.put( "Total", String.format("%.2f", salesReturnBo.getDailySalesReturnTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {

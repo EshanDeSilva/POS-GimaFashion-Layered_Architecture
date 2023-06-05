@@ -3,6 +3,7 @@ package lk.ijse.pos.dao.custom.impl;
 import lk.ijse.pos.dao.custom.SalesReturnDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
+import lk.ijse.pos.entity.SalesReturn;
 import lk.ijse.pos.model.SalesReturnDto;
 
 import java.sql.Connection;
@@ -22,56 +23,28 @@ public class SalesReturnDaoImpl implements SalesReturnDao {
     }
 
     @Override
-    public SalesReturnDto find(String s) throws SQLException, ClassNotFoundException {
+    public SalesReturn find(String s) throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public List<SalesReturnDto> findAll() throws SQLException, ClassNotFoundException {
+    public List<SalesReturn> findAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(SalesReturnDto dto) throws SQLException {
-        Connection connection = null;
-        try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            Boolean isSaved = CrudUtil.execute("INSERT INTO salesReturn VALUES (?,?,?,?)",dto.getReturnId(),
-                    dto.getOrderId(),dto.getDate(),dto.getTotal());
-            if (isSaved){
-                Boolean allDetailSaved = true;
-                for (int i = 0; i < dto.getDto().size(); i++) {
-                    Boolean detailSaved = CrudUtil.execute("INSERT INTO salesReturnDetails VALUES (?,?,?,?,?,?)",
-                            dto.getDto().get(i).getReturnId(),dto.getDto().get(i).getItemCode(),
-                            dto.getDto().get(i).getQty(),dto.getDto().get(i).getDiscRate(),
-                            dto.getDto().get(i).getUnitPrice(),dto.getDto().get(i).getAmount());
-                    if (!detailSaved){
-                        allDetailSaved = false;
-                    }
-                }
-                if (allDetailSaved){
-                    connection.commit();
-                    return true;
-                }
-            }
-            return false;
-        }catch (SQLException | ClassNotFoundException e){
-            connection.rollback();
-            e.printStackTrace();
-            return false;
-        } finally {
-            connection.setAutoCommit(true);
-        }
+    public boolean save(SalesReturn dto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("INSERT INTO salesReturn VALUES (?,?,?,?)",dto.getReturnId(),
+                dto.getOrderId(),dto.getDate(),dto.getTotal());
     }
 
     @Override
-    public boolean update(SalesReturnDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(SalesReturn dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(SalesReturnDto salesReturnDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(SalesReturn salesReturnDto) throws SQLException, ClassNotFoundException {
         return false;
     }
 

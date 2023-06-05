@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 6.20.1-7584acb244139816654f64e2fd57a00d3e31921e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Return" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="750027b8-aebe-49b5-8ffe-1bca6e4ee4e3">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
 	<queryString>
 		<![CDATA[SELECT *
-FROM `salesReturn`
-	INNER JOIN `salesReturnDetails` ON 
-	 `salesReturn`.`returnId` = `salesReturnDetails`.`returnId` 
-	 INNER JOIN item ON salesReturnDetails.itemCode=item.itemCode
+FROM salesReturn
+	INNER JOIN salesReturnDetails ON 
+	 salesReturn.returnId = salesReturnDetails.returnId 
+	INNER JOIN item ON 
+	 salesReturnDetails.itemCode = item.itemCode 
 WHERE 
-	 `salesReturn`.`returnId` = 'R-00000001']]>
+	 salesReturn.returnId = 'R-00000001']]>
 	</queryString>
 	<field name="returnId" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="returnId"/>
@@ -47,9 +48,9 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="qty"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="salesreturndetails"/>
 	</field>
-	<field name="discountRate" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="discountRate"/>
-		<property name="com.jaspersoft.studio.field.label" value="discountRate"/>
+	<field name="discRate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="discRate"/>
+		<property name="com.jaspersoft.studio.field.label" value="discRate"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="salesreturndetails"/>
 	</field>
 	<field name="unitPrice" class="java.math.BigDecimal">
@@ -267,7 +268,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{discountRate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{discRate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="440" y="0" width="110" height="30" uuid="a2b5b36d-c4aa-42c3-aaa1-a986e1b0c9ef">

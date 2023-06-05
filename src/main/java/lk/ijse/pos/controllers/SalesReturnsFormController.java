@@ -17,6 +17,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.SalesReturnBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.OrderDetailsDto;
@@ -25,7 +27,6 @@ import lk.ijse.pos.model.SalesReturnDto;
 import lk.ijse.pos.model.tm.OrderTm;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
-import lk.ijse.pos.dao.custom.impl.SalesReturnDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -58,7 +59,8 @@ public class SalesReturnsFormController {
     public JFXTextField txtOrderQuantity;
     public JFXButton btnUpdate;
 
-    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+//    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
+    SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
     OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
 
@@ -204,7 +206,7 @@ public class SalesReturnsFormController {
 
     public void placeReturnButtonOnAction(ActionEvent event) {
         try {
-            String returnId = salesReturnDao.getId();
+            String returnId = salesReturnBo.getId();
             List<SalesReturnDetailsDto> returnItemList = new ArrayList<>();
             for (OrderTm tm:tmList) {
                 returnItemList.add(new SalesReturnDetailsDto(
@@ -216,7 +218,7 @@ public class SalesReturnsFormController {
                         tm.getQty()*(tm.getUnitPrice()-((tm.getUnitPrice()/100)*tm.getDiscount()))
                 ));
             }
-            boolean isSaved = salesReturnDao.save(new SalesReturnDto(
+            boolean isSaved = salesReturnBo.saveSalesReturn(new SalesReturnDto(
                     returnId,
                     txtOrderId.getText(),
                     LocalDate.now().toString(),
