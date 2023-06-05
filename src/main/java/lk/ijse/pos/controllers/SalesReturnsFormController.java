@@ -18,15 +18,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.bo.custom.SalesReturnBo;
-import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.model.SalesReturnDetailsDto;
 import lk.ijse.pos.model.SalesReturnDto;
 import lk.ijse.pos.model.tm.OrderTm;
-import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -60,10 +59,11 @@ public class SalesReturnsFormController {
     public JFXButton btnUpdate;
 
 //    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
-    SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
 //    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+//    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
     OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
-    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+    ItemBo itemBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ITEM_BO);
 
     public void initialize(){
         getOrder();
@@ -129,13 +129,13 @@ public class SalesReturnsFormController {
                         btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
                         tmList.add(new OrderTm(
                                 list.get(i).getItemCode(),
-                                itemDao.find(list.get(i).getItemCode()).getDescription(),
+                                itemBo.findItem(list.get(i).getItemCode()).getDescription(),
                                 list.get(i).getOrderQty(),
                                 list.get(i).getUnitPrice(),
                                 LocalDate.now().toString(),
                                 list.get(i).getDiscRate(),
-                                itemDao.find(list.get(i).getItemCode()).getCategoryDto().getType(),
-                                itemDao.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
+                                itemBo.findItem(list.get(i).getItemCode()).getCategoryDto().getType(),
+                                itemBo.findItem(list.get(i).getItemCode()).getCategoryDto().getSize(),
                                 ((list.get(i).getUnitPrice()-((list.get(i).getUnitPrice()/100)*list.get(i).getDiscRate()))*list.get(i).getOrderQty()),
                                 btn
                         ));
@@ -229,7 +229,7 @@ public class SalesReturnsFormController {
             if (isSaved) {
                 Boolean allAdded = true;
                 for (OrderTm tm:tmList) {
-                    Boolean isAdded = itemDao.addStock(tm.getItemCode(),tm.getQty());
+                    Boolean isAdded = itemBo.addStock(tm.getItemCode(),tm.getQty());
                     if (!isAdded){
                         allAdded = false;
                     }

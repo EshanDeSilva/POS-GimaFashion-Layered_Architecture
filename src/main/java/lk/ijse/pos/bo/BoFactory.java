@@ -25,6 +25,7 @@ public class BoFactory {
             case PAYMENT_BO: return (T) new PaymentBoImpl();
             case ORDER_DETAILS_BO: return (T) new OrderDetailsBoImpl();
             case ORDER_BO: return (T) new OrderBoImpl();
+            case ITEM_BO: return (T) new ItemBoImpl();
             default: return null;
         }
     }

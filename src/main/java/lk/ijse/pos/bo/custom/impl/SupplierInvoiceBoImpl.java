@@ -4,9 +4,8 @@ import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.ItemDao;
 import lk.ijse.pos.dao.custom.SupplierInvoiceDao;
-import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
-import lk.ijse.pos.dao.custom.impl.SupplierInvoiceDaoImpl;
 import lk.ijse.pos.db.DBConnection;
+import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.entity.SupplierInvoice;
 import lk.ijse.pos.model.SupplierInvoiceDto;
 
@@ -29,7 +28,15 @@ public class SupplierInvoiceBoImpl implements SupplierInvoiceBo {
         try{
             connection= DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean itemSaved = itemDao.save(dto.getDto());
+            boolean itemSaved = itemDao.save(new Item(
+                    dto.getDto().getCode(),
+                    dto.getDto().getSupplierId(),
+                    dto.getDto().getDescription(),
+                    Integer.parseInt(dto.getDto().getQty()),
+                    Double.parseDouble(dto.getDto().getSellingPrice()),
+                    Double.parseDouble(dto.getDto().getBuyingPrice()),
+                    dto.getDto().getCategoryDto().getId()
+            ));
             if(itemSaved) {
 
                 if (supplierInvoiceDao.save(new SupplierInvoice(dto.getInvoiceId(),dto.getSupplierId(),dto.getItemCode(),dto.getDate(),dto.getQty()))) {
@@ -53,7 +60,15 @@ public class SupplierInvoiceBoImpl implements SupplierInvoiceBo {
         try{
             connection= DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean isUpdated = itemDao.updateQty(dto.getDto());
+            boolean isUpdated = itemDao.updateQty(new Item(
+                    dto.getDto().getCode(),
+                    dto.getDto().getSupplierId(),
+                    dto.getDto().getDescription(),
+                    Integer.parseInt(dto.getDto().getQty()),
+                    Double.parseDouble(dto.getDto().getSellingPrice()),
+                    Double.parseDouble(dto.getDto().getBuyingPrice()),
+                    dto.getDto().getCategoryDto().getId()
+            ));
             if(isUpdated) {
 
                 if (supplierInvoiceDao.addStock(new SupplierInvoice(dto.getInvoiceId(),dto.getSupplierId(),dto.getItemCode(),dto.getDate(),dto.getQty()))) {

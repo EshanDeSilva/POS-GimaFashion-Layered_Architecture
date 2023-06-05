@@ -18,6 +18,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.bo.custom.OrderBo;
 import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.dao.DaoFactory;
@@ -27,7 +28,6 @@ import lk.ijse.pos.model.PaymentDto;
 import lk.ijse.pos.model.tm.OrderDetailsTm;
 import lk.ijse.pos.model.tm.OrderTm;
 import lk.ijse.pos.dao.custom.impl.EmployerDaoImpl;
-import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -59,11 +59,12 @@ public class OrderDetailsFormController {
 
 //    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
 //    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
-    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+//    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
     OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
     OrderBo orderBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_BO);
+    ItemBo itemBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ITEM_BO);
 
     public void initialize(){
 
@@ -146,13 +147,13 @@ public class OrderDetailsFormController {
             for (int i = 0; i < list.size(); i++) {
                 tmList.add(new OrderTm(
                         list.get(i).getItemCode(),
-                        itemDao.find(list.get(i).getItemCode()).getDescription(),
+                        itemBo.findItem(list.get(i).getItemCode()).getDescription(),
                         list.get(i).getOrderQty(),
                         list.get(i).getUnitPrice(),
                         newValue.getValue().getDate(),
                         list.get(i).getDiscRate(),
-                        itemDao.find(list.get(i).getItemCode()).getCategoryDto().getType(),
-                        itemDao.find(list.get(i).getItemCode()).getCategoryDto().getSize(),
+                        itemBo.findItem(list.get(i).getItemCode()).getCategoryDto().getType(),
+                        itemBo.findItem(list.get(i).getItemCode()).getCategoryDto().getSize(),
                         ((list.get(i).getUnitPrice()-((list.get(i).getUnitPrice()/100)*list.get(i).getDiscRate()))*list.get(i).getOrderQty()),
                         new JFXButton("Delete")
                 ));

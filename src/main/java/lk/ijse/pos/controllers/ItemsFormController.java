@@ -17,13 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.bo.custom.SupplierBo;
 import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
-import lk.ijse.pos.bo.custom.impl.SupplierInvoiceBoImpl;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.impl.CategoryDaoImpl;
-import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
-import lk.ijse.pos.dao.custom.impl.SupplierDaoImpl;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.*;
 import lk.ijse.pos.model.tm.ItemTm;
@@ -75,11 +73,12 @@ public class ItemsFormController {
 
 //    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
 //    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
-    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
+//    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
 
     SupplierInvoiceBo supplierInvoiceBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_INVOICE_BO);
     SupplierBo supplierBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_BO);
+    ItemBo itemBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ITEM_BO);
 
     public void initialize(){
 
@@ -306,7 +305,7 @@ public class ItemsFormController {
 
     private void loadCode() {
         try {
-            txtCode.setText(itemDao.getId());
+            txtCode.setText(itemBo.getId());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -326,7 +325,7 @@ public class ItemsFormController {
     private void loadTable(){
         ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
         try {
-            List<ItemDto> items = itemDao.findAll();
+            List<ItemDto> items = itemBo.findAllItems();
             for (ItemDto dto:items) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
@@ -336,7 +335,7 @@ public class ItemsFormController {
                     Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete "+dto.getCode()+" ?", ButtonType.NO, ButtonType.YES).showAndWait();
                     if (buttonType.get()==ButtonType.YES){
                         try {
-                            boolean isDeleted = itemDao.delete(dto.getCode());
+                            boolean isDeleted = itemBo.deleteItem(dto.getCode());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Deleted..!").show();
                                 //loadTable();
@@ -409,7 +408,7 @@ public class ItemsFormController {
                 !txtBuyingPrice.getText().isEmpty() && !txtSellingPrice.getText().isEmpty() &&
                 cmbType.getValue()!=null && cmbSize.getValue()!=null && !cmbSize.getValue().equals("Custom")) {
             try {
-                boolean isUpdated = itemDao.update(new ItemDto(
+                boolean isUpdated = itemBo.updateItem(new ItemDto(
                         txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                         txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
                         categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
