@@ -12,11 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderBo;
 import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.bo.custom.SalesReturnBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
-import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -40,7 +40,8 @@ public class SalesReportsFormController {
     SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
 //    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
     OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
-    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+//    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+    OrderBo orderBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_BO);
 
     public void initialize(){
         ObservableList<String> list = FXCollections.observableArrayList("Today","This Month","This Year");
@@ -79,7 +80,7 @@ public class SalesReportsFormController {
 
             lblIncome.setText(String.format("%.2f", orderDetailsBo.getAnnualIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsBo.getAnnualSalesCount()));
-            lblSales.setText(String.format("%.2f", orderDao.getAnnualSalesTotal()));
+            lblSales.setText(String.format("%.2f", orderBo.getAnnualSalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -97,7 +98,7 @@ public class SalesReportsFormController {
             }
             lblIncome.setText(String.format("%.2f", orderDetailsBo.getMonthlyIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsBo.getMonthlySalesCount()));
-            lblSales.setText(String.format("%.2f", orderDao.getMonthlySalesTotal()));
+            lblSales.setText(String.format("%.2f", orderBo.getMonthlySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -109,7 +110,7 @@ public class SalesReportsFormController {
         try {
             lblIncome.setText(String.format("%.2f", orderDetailsBo.getDailyIncome()));
             lblSalesCount.setText(String.valueOf(orderDetailsBo.getDailySalesCount()));
-            lblSales.setText(String.format("%.2f", orderDao.getDailySalesTotal()));
+            lblSales.setText(String.format("%.2f", orderBo.getDailySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -135,7 +136,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", orderDao.getDailySalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderBo.getDailySalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {
@@ -152,7 +153,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", orderDao.getMonthlySalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderBo.getMonthlySalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {
@@ -169,7 +170,7 @@ public class SalesReportsFormController {
 
             JasperReport compileReport = JasperCompileManager.compileReport(jDesign);
             java.util.Map params = new java.util.HashMap();
-            params.put( "Total", String.format("%.2f", orderDao.getAnnualSalesTotal()) );
+            params.put( "Total", String.format("%.2f", orderBo.getAnnualSalesTotal()) );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport,params , DBConnection.getInstance().getConnection());
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException | SQLException | ClassNotFoundException e) {

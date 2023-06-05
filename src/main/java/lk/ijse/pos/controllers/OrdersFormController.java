@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderBo;
 import lk.ijse.pos.bo.custom.PaymentBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
@@ -24,8 +25,6 @@ import lk.ijse.pos.model.*;
 import lk.ijse.pos.model.tm.OrderTm;
 import lk.ijse.pos.dao.custom.impl.EmployerDaoImpl;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
-import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
-import lk.ijse.pos.dao.custom.impl.PaymentDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -88,7 +87,8 @@ public class OrdersFormController {
 
 //    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     PaymentBo paymentBo = BoFactory.getInstance().getBoType(BoFactory.BoType.PAYMENT_BO);
-    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+//    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+    OrderBo orderBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_BO);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
@@ -264,7 +264,7 @@ public class OrdersFormController {
 
     private void loadOrderId() {
         try {
-            txtOrderId.setText(orderDao.getId());
+            txtOrderId.setText(orderBo.getId());
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -335,7 +335,7 @@ public class OrdersFormController {
                                 datePicker.getValue().toString(),
                                 txtOrderId.getText()
                         ));
-                        boolean isSaved = orderDao.save(new OrderDto(
+                        boolean isSaved = orderBo.saveOrder(new OrderDto(
                                 txtOrderId.getText(),
                                 datePicker.getValue().toString(),
                                 Double.parseDouble(lblDiscount.getText()),

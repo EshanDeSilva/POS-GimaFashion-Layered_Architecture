@@ -7,6 +7,7 @@ import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.OrderDao;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 import lk.ijse.pos.db.DBConnection;
+import lk.ijse.pos.entity.Orders;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.model.OrderDto;
 
@@ -33,53 +34,24 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public OrderDto find(String s) throws SQLException, ClassNotFoundException {
+    public Orders find(String s) throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(OrderDto dto) throws SQLException {
-        Connection connection=null;
-        try{
-            connection= DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            Boolean orderSaved = CrudUtil.execute("INSERT INTO orders VALUES (?,?,?,?,?,?,?,?)",
-                    dto.getOrderId(), dto.getDate(), dto.getTotalDiscount(), dto.getTotal(), dto.getEmployerId(),
-                    dto.getCustomerName(), dto.getCustomerEmail(), dto.getCustomerContact());
-            if (orderSaved) {
-                boolean paymentSaved = paymentBo.savePayment(dto.getPaymentDto());
-                if (paymentSaved) {
-                    boolean detailSaved = true;
-                    for (OrderDetailsDto dto1 : dto.getDetailDto()) {
-                        if (!orderDetailsBo.saveOrderDetail(dto1)) {
-                            detailSaved = false;
-                        }
-                    }
-                    //System.out.println("detail" + detailSaved);
-                    if (detailSaved) {
-                        connection.commit();
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }catch (SQLException | ClassNotFoundException er) {
-            connection.rollback();
-            er.printStackTrace();
-            return false;
-        } finally {
-            //System.out.println("finally");
-            connection.setAutoCommit(true);
-        }
+    public boolean save(Orders dto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("INSERT INTO orders VALUES (?,?,?,?,?,?,?,?)",
+                dto.getOrderId(), dto.getDate(), dto.getTotalDiscount(), dto.getTotal(), dto.getEmployerId(),
+                dto.getCustomerName(), dto.getCustomerEmail(), dto.getCustomerContact());
     }
 
     @Override
-    public boolean update(OrderDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Orders dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(OrderDto orderDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Orders orderDto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -89,11 +61,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<OrderDto> findAll() throws SQLException, ClassNotFoundException {
+    public List<Orders> findAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM orders");
-        List<OrderDto> list = new ArrayList<>();
+        List<Orders> list = new ArrayList<>();
         while (resultSet.next()){
-            list.add(new OrderDto(
+            list.add(new Orders(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
@@ -101,9 +73,7 @@ public class OrderDaoImpl implements OrderDao {
                     resultSet.getString(5),
                     resultSet.getString(6),
                     resultSet.getString(7),
-                    resultSet.getString(8),
-                    orderDetailsBo.findAllOrderDetails(resultSet.getString(1)),
-                    paymentBo.getPayments(resultSet.getString(1))
+                    resultSet.getString(8)
             ));
         }
         return list;

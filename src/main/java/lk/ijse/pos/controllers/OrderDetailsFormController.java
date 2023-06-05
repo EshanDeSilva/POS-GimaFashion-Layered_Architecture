@@ -18,6 +18,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderBo;
 import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.model.OrderDetailsDto;
@@ -27,7 +28,6 @@ import lk.ijse.pos.model.tm.OrderDetailsTm;
 import lk.ijse.pos.model.tm.OrderTm;
 import lk.ijse.pos.dao.custom.impl.EmployerDaoImpl;
 import lk.ijse.pos.dao.custom.impl.ItemDaoImpl;
-import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -58,11 +58,12 @@ public class OrderDetailsFormController {
     public BorderPane orderDetailsPane;
 
 //    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
+//    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
     ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
     EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
 
     OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
+    OrderBo orderBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_BO);
 
     public void initialize(){
 
@@ -106,7 +107,7 @@ public class OrderDetailsFormController {
 
     private void loadOrders() {
         try {
-            List<OrderDto> list = orderDao.findAll();
+            List<OrderDto> list = orderBo.findAllOrders();
             ObservableList<OrderDetailsTm> tmList = FXCollections.observableArrayList();
             for (OrderDto dto:list) {
                 double payAmounts = 0;
