@@ -1,6 +1,7 @@
 package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.bo.custom.PaymentBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.OrderDao;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+//    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
 //    PaymentDaoImpl paymentDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.PAYMENT);
     PaymentBo paymentBo = BoFactory.getInstance().getBoType(BoFactory.BoType.PAYMENT_BO);
+    OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
+
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1");
@@ -48,7 +51,7 @@ public class OrderDaoImpl implements OrderDao {
                 if (paymentSaved) {
                     boolean detailSaved = true;
                     for (OrderDetailsDto dto1 : dto.getDetailDto()) {
-                        if (!orderDetailsDao.save(dto1)) {
+                        if (!orderDetailsBo.saveOrderDetail(dto1)) {
                             detailSaved = false;
                         }
                     }
@@ -99,7 +102,7 @@ public class OrderDaoImpl implements OrderDao {
                     resultSet.getString(6),
                     resultSet.getString(7),
                     resultSet.getString(8),
-                    orderDetailsDao.findAll(resultSet.getString(1)),
+                    orderDetailsBo.findAllOrderDetails(resultSet.getString(1)),
                     paymentBo.getPayments(resultSet.getString(1))
             ));
         }

@@ -1,6 +1,7 @@
 package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.dao.custom.OrderDetailsDao;
+import lk.ijse.pos.entity.OrderDetails;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 
@@ -11,23 +12,23 @@ import java.util.List;
 
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
     @Override
-    public List<OrderDetailsDto> findAll() throws SQLException, ClassNotFoundException {
+    public List<OrderDetails> findAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(OrderDetailsDto dto) throws SQLException, ClassNotFoundException {
+    public boolean save(OrderDetails dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO orderdetails VALUES (?,?,?,?,?,?)",
-                dto.getOrderId(),dto.getItemCode(),dto.getOrderQty(),dto.getUnitPrice(),dto.getTotalProfit(),dto.getDiscRate());
+                dto.getOrderId(),dto.getItemCode(),dto.getOrderQty(),dto.getUnitPrice(),dto.getTotalProfit(),dto.getDiscountRate());
     }
 
     @Override
-    public boolean update(OrderDetailsDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(OrderDetails dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean exists(OrderDetailsDto orderDetailsDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(OrderDetails orderDetailsDto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -42,7 +43,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     }
 
     @Override
-    public OrderDetailsDto find(String s) throws SQLException, ClassNotFoundException {
+    public OrderDetails find(String s) throws SQLException, ClassNotFoundException {
         return null;
     }
 
@@ -86,11 +87,11 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     }
 
     @Override
-    public List<OrderDetailsDto> findAll(String id) throws SQLException, ClassNotFoundException {
+    public List<OrderDetails> findAll(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM orderDetails WHERE orderId=?",id);
-        List<OrderDetailsDto> list = new ArrayList<>();
+        List<OrderDetails> list = new ArrayList<>();
         while (resultSet.next()){
-            list.add(new OrderDetailsDto(
+            list.add(new OrderDetails(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getInt(3),

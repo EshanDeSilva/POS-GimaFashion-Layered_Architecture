@@ -57,6 +57,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public List<CategoryDto> findAllTypes() throws SQLException, ClassNotFoundException {
+        CrudUtil.execute("SET sql_mode = (SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category GROUP BY 3");
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){
@@ -71,6 +72,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public List<CategoryDto> findAllSize(String type) throws SQLException, ClassNotFoundException {
+        CrudUtil.execute("SET sql_mode = (SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM category WHERE gender=? GROUP BY 2",type);
         List<CategoryDto> list = new ArrayList<>();
         while (resultSet.next()){

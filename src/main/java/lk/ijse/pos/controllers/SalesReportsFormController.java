@@ -12,10 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderDetailsBo;
 import lk.ijse.pos.bo.custom.SalesReturnBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.db.DBConnection;
-import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
@@ -38,7 +38,8 @@ public class SalesReportsFormController {
 
 //    SalesReturnDaoImpl salesReturnDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SALES_RETURN);
     SalesReturnBo salesReturnBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SALES_RETURN_BO);
-    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+//    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
     OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
 
     public void initialize(){
@@ -63,21 +64,21 @@ public class SalesReportsFormController {
         series.setName("Sales");
         //chart.setTitle("Annual Chart "+ Year.now());
         try {
-            series.getData().add(new XYChart.Data("Jan", orderDetailsDao.getMonthlySalesCount("january")));
-            series.getData().add(new XYChart.Data("Feb", orderDetailsDao.getMonthlySalesCount("february")));
-            series.getData().add(new XYChart.Data("Mar", orderDetailsDao.getMonthlySalesCount("march")));
-            series.getData().add(new XYChart.Data("Apr", orderDetailsDao.getMonthlySalesCount("april")));
-            series.getData().add(new XYChart.Data("May", orderDetailsDao.getMonthlySalesCount("may")));
-            series.getData().add(new XYChart.Data("Jun", orderDetailsDao.getMonthlySalesCount("june")));
-            series.getData().add(new XYChart.Data("Jul", orderDetailsDao.getMonthlySalesCount("july")));
-            series.getData().add(new XYChart.Data("Aug", orderDetailsDao.getMonthlySalesCount("august")));
-            series.getData().add(new XYChart.Data("Sep", orderDetailsDao.getMonthlySalesCount("september")));
-            series.getData().add(new XYChart.Data("Oct", orderDetailsDao.getMonthlySalesCount("october")));
-            series.getData().add(new XYChart.Data("Nov", orderDetailsDao.getMonthlySalesCount("november")));
-            series.getData().add(new XYChart.Data("Dec", orderDetailsDao.getMonthlySalesCount("december")));
+            series.getData().add(new XYChart.Data("Jan", orderDetailsBo.getMonthlySalesCount("january")));
+            series.getData().add(new XYChart.Data("Feb", orderDetailsBo.getMonthlySalesCount("february")));
+            series.getData().add(new XYChart.Data("Mar", orderDetailsBo.getMonthlySalesCount("march")));
+            series.getData().add(new XYChart.Data("Apr", orderDetailsBo.getMonthlySalesCount("april")));
+            series.getData().add(new XYChart.Data("May", orderDetailsBo.getMonthlySalesCount("may")));
+            series.getData().add(new XYChart.Data("Jun", orderDetailsBo.getMonthlySalesCount("june")));
+            series.getData().add(new XYChart.Data("Jul", orderDetailsBo.getMonthlySalesCount("july")));
+            series.getData().add(new XYChart.Data("Aug", orderDetailsBo.getMonthlySalesCount("august")));
+            series.getData().add(new XYChart.Data("Sep", orderDetailsBo.getMonthlySalesCount("september")));
+            series.getData().add(new XYChart.Data("Oct", orderDetailsBo.getMonthlySalesCount("october")));
+            series.getData().add(new XYChart.Data("Nov", orderDetailsBo.getMonthlySalesCount("november")));
+            series.getData().add(new XYChart.Data("Dec", orderDetailsBo.getMonthlySalesCount("december")));
 
-            lblIncome.setText(String.format("%.2f", orderDetailsDao.getAnnualIncome()));
-            lblSalesCount.setText(String.valueOf(orderDetailsDao.getAnnualSalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsBo.getAnnualIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsBo.getAnnualSalesCount()));
             lblSales.setText(String.format("%.2f", orderDao.getAnnualSalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -92,10 +93,10 @@ public class SalesReportsFormController {
         //chart.setTitle("Monthly Chart "+ Month.of(YearMonth.now().getMonthValue()));
         try {
             for (int i = 1; i <= YearMonth.now().lengthOfMonth(); i++) {
-                series.getData().add(new XYChart.Data(i+"", orderDetailsDao.getDailySalesCount(i)));
+                series.getData().add(new XYChart.Data(i+"", orderDetailsBo.getDailySalesCount(i)));
             }
-            lblIncome.setText(String.format("%.2f", orderDetailsDao.getMonthlyIncome()));
-            lblSalesCount.setText(String.valueOf(orderDetailsDao.getMonthlySalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsBo.getMonthlyIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsBo.getMonthlySalesCount()));
             lblSales.setText(String.format("%.2f", orderDao.getMonthlySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -106,8 +107,8 @@ public class SalesReportsFormController {
     private void loadToday() {
         loadThisMonth();
         try {
-            lblIncome.setText(String.format("%.2f", orderDetailsDao.getDailyIncome()));
-            lblSalesCount.setText(String.valueOf(orderDetailsDao.getDailySalesCount()));
+            lblIncome.setText(String.format("%.2f", orderDetailsBo.getDailyIncome()));
+            lblSalesCount.setText(String.valueOf(orderDetailsBo.getDailySalesCount()));
             lblSales.setText(String.format("%.2f", orderDao.getDailySalesTotal()));
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();

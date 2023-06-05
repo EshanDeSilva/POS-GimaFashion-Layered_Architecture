@@ -16,8 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.pos.dao.DaoFactory;
-import lk.ijse.pos.dao.custom.impl.OrderDetailsDaoImpl;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.OrderDetailsBo;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,8 +35,8 @@ public class DashBoardFormController {
 
     public static Boolean isAdminLogin = false;
 
-    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-
+//    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
+    OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
     public void initialize(){
         manageDateAndTime();
         loadPieChart();
@@ -56,10 +56,10 @@ public class DashBoardFormController {
                 null;
         try {
             pieChartData = FXCollections.observableArrayList(
-                    new PieChart.Data("Gents", orderDetailsDao.getDailyGentsSaleCount()),
-                    new PieChart.Data("Ladies", orderDetailsDao.getDailyLadiesSaleCount()),
-                    new PieChart.Data("Kids", orderDetailsDao.getDailyKidsSaleCount()),
-                    new PieChart.Data("Other", orderDetailsDao.getDailyOtherSaleCount())
+                    new PieChart.Data("Gents", orderDetailsBo.getDailyGentsSaleCount()),
+                    new PieChart.Data("Ladies", orderDetailsBo.getDailyLadiesSaleCount()),
+                    new PieChart.Data("Kids", orderDetailsBo.getDailyKidsSaleCount()),
+                    new PieChart.Data("Other", orderDetailsBo.getDailyOtherSaleCount())
             );
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

@@ -23,6 +23,7 @@ public class BoFactory {
             case SUPPLIER_BO: return (T) new SupplierBoImpl();
             case SALES_RETURN_BO: return (T) new SalesReturnBoImpl();
             case PAYMENT_BO: return (T) new PaymentBoImpl();
+            case ORDER_DETAILS_BO: return (T) new OrderDetailsBoImpl();
             default: return null;
         }
     }
