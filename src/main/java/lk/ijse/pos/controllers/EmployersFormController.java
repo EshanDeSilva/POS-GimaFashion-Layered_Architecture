@@ -17,11 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import lk.ijse.pos.dao.DaoFactory;
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.EmployerBo;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.EmployerDto;
 import lk.ijse.pos.model.tm.EmployerTm;
-import lk.ijse.pos.dao.custom.impl.EmployerDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -62,8 +62,8 @@ public class EmployersFormController {
     public JFXTextField txtBankBranch;
     public JFXTextField txtContact;
 
-    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
-
+//    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
+    EmployerBo employerBo = BoFactory.getInstance().getBoType(BoFactory.BoType.EMPLOYER_BO);
     public void initialize(){
 
         colId.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
@@ -163,7 +163,7 @@ public class EmployersFormController {
         if (btnSave.getText().equals("Save") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtContact.getText().isEmpty() &&
         !txtNIC.getText().isEmpty() && !cmbTitle.getValue().toString().isEmpty() && !datePickerDob.getValue().toString().isEmpty()) {
             try {
-                boolean isSaved = employerDao.save(new EmployerDto(
+                boolean isSaved = employerBo.saveEmployer(new EmployerDto(
                         txtId.getText(), cmbTitle.getValue().toString(), txtName.getText(),
                         txtNIC.getText(), datePickerDob.getValue().toString(), txtAddress.getText(),
                         txtBankAcc.getText(), txtBankBranch.getText(), txtContact.getText()
@@ -183,7 +183,7 @@ public class EmployersFormController {
         }else if (btnSave.getText().equals("Update") && !txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtContact.getText().isEmpty() &&
                 !txtNIC.getText().isEmpty() && !cmbTitle.getValue().toString().isEmpty() && !datePickerDob.getValue().toString().isEmpty()) {
             try {
-                boolean isUpdated = employerDao.update(new EmployerDto(
+                boolean isUpdated = employerBo.updateEmployer(new EmployerDto(
                         txtId.getText(), cmbTitle.getValue().toString(), txtName.getText(),
                         txtNIC.getText(), datePickerDob.getValue().toString(), txtAddress.getText(),
                         txtBankAcc.getText(), txtBankBranch.getText(), txtContact.getText()
@@ -228,7 +228,7 @@ public class EmployersFormController {
     private void loadTable() {
         ObservableList<EmployerTm> tmList = FXCollections.observableArrayList();
         try {
-            List<EmployerDto> employers = employerDao.findAll();
+            List<EmployerDto> employers = employerBo.findAllEmployers();
             for (EmployerDto dto:employers) {
                 JFXButton btn = new JFXButton("Delete");
                 btn.setBackground(Background.fill(Color.rgb(255, 121, 121)));
@@ -238,7 +238,7 @@ public class EmployersFormController {
                     Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete "+dto.getId()+" ?", ButtonType.NO, ButtonType.YES).showAndWait();
                     if (buttonType.get()==ButtonType.YES){
                         try {
-                            boolean isDeleted = employerDao.delete(dto.getId());
+                            boolean isDeleted = employerBo.deleteEmployer(dto.getId());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Deleted..!").show();
                                 loadTable();
@@ -279,7 +279,7 @@ public class EmployersFormController {
 
     private void loadId() {
         try {
-            txtId.setText(employerDao.getId());
+            txtId.setText(employerBo.getId());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

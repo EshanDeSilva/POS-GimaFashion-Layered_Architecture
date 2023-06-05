@@ -18,16 +18,15 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.EmployerBo;
 import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.bo.custom.OrderBo;
 import lk.ijse.pos.bo.custom.OrderDetailsBo;
-import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.model.OrderDetailsDto;
 import lk.ijse.pos.model.OrderDto;
 import lk.ijse.pos.model.PaymentDto;
 import lk.ijse.pos.model.tm.OrderDetailsTm;
 import lk.ijse.pos.model.tm.OrderTm;
-import lk.ijse.pos.dao.custom.impl.EmployerDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -57,14 +56,10 @@ public class OrderDetailsFormController {
     public JFXTextField txtSearch;
     public BorderPane orderDetailsPane;
 
-//    OrderDetailsDaoImpl orderDetailsDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER_DETAILS);
-//    OrderDaoImpl orderDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ORDER);
-//    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
-    EmployerDaoImpl employerDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.EMPLOYER);
-
     OrderDetailsBo orderDetailsBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_DETAILS_BO);
     OrderBo orderBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ORDER_BO);
     ItemBo itemBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ITEM_BO);
+    EmployerBo employerBo = BoFactory.getInstance().getBoType(BoFactory.BoType.EMPLOYER_BO);
 
     public void initialize(){
 
@@ -122,7 +117,7 @@ public class OrderDetailsFormController {
                         dto.getCustomerName(),
                         dto.getCustomerContact(),
                         dto.getCustomerEmail(),
-                        employerDao.findName(dto.getEmployerId()),
+                        employerBo.findNameOfEmployer(dto.getEmployerId()),
                         dto.getTotal()-payAmounts
                 ));
             }

@@ -1,6 +1,7 @@
 package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.dao.custom.EmployerDao;
+import lk.ijse.pos.entity.Employer;
 import lk.ijse.pos.model.EmployerDto;
 import lk.ijse.pos.dao.custom.impl.util.CrudUtil;
 
@@ -22,7 +23,7 @@ public class EmployerDaoImpl implements EmployerDao {
     }
 
     @Override
-    public boolean save(EmployerDto dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Employer dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO employer VALUES (?,?,?,?,?,?,?,?,?)",
                 dto.getId(),
                 dto.getTitle(),
@@ -30,29 +31,29 @@ public class EmployerDaoImpl implements EmployerDao {
                 dto.getNic(),
                 dto.getDob(),
                 dto.getAddress(),
-                dto.getBankAcc(),
+                dto.getBankAccountNo(),
                 dto.getBankBranch(),
-                dto.getContact());
+                dto.getContactNo());
     }
 
     @Override
-    public boolean update(EmployerDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Employer dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE employer SET title=?,name=?,nic=?,dob=?,address=?,bankAccountNo=?," +
                         "bankBranch=?,contactNo=? WHERE id=?", dto.getTitle(),dto.getName(),dto.getNic(),dto.getDob(),
-                dto.getAddress(),dto.getBankAcc(),dto.getBankBranch(),dto.getContact(),dto.getId());
+                dto.getAddress(),dto.getBankAccountNo(),dto.getBankBranch(),dto.getContactNo(),dto.getId());
     }
 
     @Override
-    public boolean exists(EmployerDto employerDto) throws SQLException, ClassNotFoundException {
+    public boolean exists(Employer employerDto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public List<EmployerDto> findAll() throws SQLException, ClassNotFoundException {
+    public List<Employer> findAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM employer");
-        List<EmployerDto> list = new ArrayList<>();
+        List<Employer> list = new ArrayList<>();
         while (resultSet.next()){
-            list.add(new EmployerDto(
+            list.add(new Employer(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -73,10 +74,10 @@ public class EmployerDaoImpl implements EmployerDao {
     }
 
     @Override
-    public EmployerDto find(String id) throws SQLException, ClassNotFoundException {
+    public Employer find(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM employer WHERE id=?", id);
         while (resultSet.next()){
-            return new EmployerDto(
+            return new Employer(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -88,14 +89,14 @@ public class EmployerDaoImpl implements EmployerDao {
                     resultSet.getString(9)
             );
         }
-        return new EmployerDto();
+        return new Employer();
     }
 
     @Override
-    public EmployerDto findByName(String name) throws SQLException, ClassNotFoundException {
+    public Employer findByName(String name) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM employer WHERE name=?", name);
         while (resultSet.next()){
-            return new EmployerDto(
+            return new Employer(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -107,7 +108,7 @@ public class EmployerDaoImpl implements EmployerDao {
                     resultSet.getString(9)
             );
         }
-        return new EmployerDto();
+        return new Employer();
     }
 
     @Override
