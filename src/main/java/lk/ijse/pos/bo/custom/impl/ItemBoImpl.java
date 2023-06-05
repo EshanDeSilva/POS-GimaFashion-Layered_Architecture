@@ -1,9 +1,10 @@
 package lk.ijse.pos.bo.custom.impl;
 
+import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.CategoryBo;
 import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.dao.DaoFactory;
 import lk.ijse.pos.dao.custom.ItemDao;
-import lk.ijse.pos.dao.custom.impl.CategoryDaoImpl;
 import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.model.ItemDto;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ItemBoImpl implements ItemBo {
     ItemDao itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
-    CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
+    CategoryBo categoryBo = BoFactory.getInstance().getBoType(BoFactory.BoType.CATEGORY_BO);
 
     @Override
     public String getId() throws SQLException, ClassNotFoundException {
@@ -62,7 +63,7 @@ public class ItemBoImpl implements ItemBo {
                     String.valueOf(item.getQtyOnHand()),
                     String.valueOf(item.getSellingPrice()),
                     String.valueOf(item.getBuyingPrice()),
-                    categoryDao.find(item.getCategoryId())
+                    categoryBo.findCategory(item.getCategoryId())
             ));
         }
         return dtoList;
@@ -78,7 +79,7 @@ public class ItemBoImpl implements ItemBo {
                 String.valueOf(item.getQtyOnHand()),
                 String.valueOf(item.getSellingPrice()),
                 String.valueOf(item.getBuyingPrice()),
-                categoryDao.find(item.getCategoryId())
+                categoryBo.findCategory(item.getCategoryId())
         );
     }
 
@@ -111,7 +112,7 @@ public class ItemBoImpl implements ItemBo {
                     String.valueOf(item.getQtyOnHand()),
                     String.valueOf(item.getSellingPrice()),
                     String.valueOf(item.getBuyingPrice()),
-                    categoryDao.find(item.getCategoryId())
+                    categoryBo.findCategory(item.getCategoryId())
             ));
         }
         return dtoList;

@@ -17,11 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.ijse.pos.bo.BoFactory;
+import lk.ijse.pos.bo.custom.CategoryBo;
 import lk.ijse.pos.bo.custom.ItemBo;
 import lk.ijse.pos.bo.custom.SupplierBo;
 import lk.ijse.pos.bo.custom.SupplierInvoiceBo;
-import lk.ijse.pos.dao.DaoFactory;
-import lk.ijse.pos.dao.custom.impl.CategoryDaoImpl;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.*;
 import lk.ijse.pos.model.tm.ItemTm;
@@ -71,14 +70,10 @@ public class ItemsFormController {
     public JFXButton btnAdd;
     public JFXTextField txtAddQty;
 
-//    SupplierDaoImpl supplierDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER);
-//    SupplierInvoiceDaoImpl supplierInvoiceDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.SUPPLIER_INVOICE);
-//    ItemDaoImpl itemDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.ITEM);
-    CategoryDaoImpl categoryDao = DaoFactory.getDaoFactory().getDaoType(DaoFactory.DaoType.CATEGORY);
-
     SupplierInvoiceBo supplierInvoiceBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_INVOICE_BO);
     SupplierBo supplierBo = BoFactory.getInstance().getBoType(BoFactory.BoType.SUPPLIER_BO);
     ItemBo itemBo = BoFactory.getInstance().getBoType(BoFactory.BoType.ITEM_BO);
+    CategoryBo categoryBo = BoFactory.getInstance().getBoType(BoFactory.BoType.CATEGORY_BO);
 
     public void initialize(){
 
@@ -217,7 +212,7 @@ public class ItemsFormController {
         ObservableList<String> typeList = FXCollections.observableArrayList();
         typeList.add("Custom");
         try {
-            List<CategoryDto> categories = categoryDao.findAllTypes();
+            List<CategoryDto> categories = categoryBo.findAllTypesOfCategories();
             for (CategoryDto dto:categories) {
                 typeList.add(dto.getType());
             }
@@ -231,7 +226,7 @@ public class ItemsFormController {
         ObservableList<String> sizeList = FXCollections.observableArrayList();
         sizeList.add("Custom");
         try {
-            List<CategoryDto> categories = categoryDao.findAllSize(cmbType.getValue().toString());
+            List<CategoryDto> categories = categoryBo.findAllSizesOfCategories(cmbType.getValue().toString());
             for (CategoryDto dto:categories) {
                 sizeList.add(dto.getSize());
             }
@@ -386,7 +381,7 @@ public class ItemsFormController {
                             format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), txtQty.getText(), new ItemDto(
                             txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                             txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
-                            categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString()))
+                            categoryBo.findCategory(cmbType.getValue().toString(), cmbSize.getValue().toString()))
                     ));
                     if (isSaved) {
                         //loadCode();
@@ -411,7 +406,7 @@ public class ItemsFormController {
                 boolean isUpdated = itemBo.updateItem(new ItemDto(
                         txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                         txtQty.getText(), txtSellingPrice.getText(), txtBuyingPrice.getText(),
-                        categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
+                        categoryBo.findCategory(cmbType.getValue().toString(), cmbSize.getValue().toString())
                 ));
                 if (isUpdated) {
                     //loadCode();
@@ -441,7 +436,7 @@ public class ItemsFormController {
                                 txtCode.getText(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),txtAddQty.getText(),new ItemDto(
                                 txtCode.getText(), cmbId.getValue().toString(), txtDescription.getText(),
                                 String.valueOf(Integer.parseInt(txtQty.getText())+Integer.parseInt(txtAddQty.getText())), txtBuyingPrice.getText(), txtSellingPrice.getText(),
-                                categoryDao.find(cmbType.getValue().toString(), cmbSize.getValue().toString())
+                                categoryBo.findCategory(cmbType.getValue().toString(), cmbSize.getValue().toString())
                         )));
                 if (isUpdated) {
                     //loadCode();
@@ -496,7 +491,7 @@ public class ItemsFormController {
             type=txtType.getText();
         }
         try{
-            Boolean isSaved = categoryDao.save(new CategoryDto(categoryDao.getId(), txtSize.getText(), type));
+            Boolean isSaved = categoryBo.saveCategory(new CategoryDto(categoryBo.getId(), txtSize.getText(), type));
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION,"Saved..!").show();
                 loadSizes();
